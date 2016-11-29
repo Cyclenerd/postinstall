@@ -2,7 +2,7 @@
 # packages.list for DEBIAN and TYPE=workstation
 #
 # One package per line
-imagemagic
+imagemagick
 jhead
 vlc
 spotify-client

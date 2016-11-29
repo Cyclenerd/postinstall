@@ -13,7 +13,7 @@ fi
 
 # Add the Spotify repository
 echo_step "  Installing Spotify repository"
-deb http://repository.spotify.com stable non-free | tee "/etc/apt/sources.list.d/spotify.list" >>"$INSTALL_LOG" 2>&1
+echo "deb http://repository.spotify.com stable non-free" | tee "/etc/apt/sources.list.d/spotify.list" >>"$INSTALL_LOG" 2>&1
 if [ "$?" -ne 0 ]; then
 	echo_warning "Failed to install repositories, will attempt to continue"
 else
