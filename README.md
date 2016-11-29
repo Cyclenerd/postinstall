@@ -104,6 +104,21 @@ Only `bash`, `curl` and a package manager for the respective operating system:
 * Red Hat → `dnf` or `yum`
 * SUSE    → `zypper`
 
+## Install
+
+Download:
+
+	curl -f https://raw.githubusercontent.com/Cyclenerd/postinstall/master/postinstall.sh -o postinstall.sh
+
+or
+
+	curl -fL http://bit.ly/get_postinstall -o postinstall.sh
+
+Run as root
+
+	bash postinstall.sh
+
+
 ## Usage
 
 	Usage: postinstall [-t <TYPE>] [-b <BASE>] [-h]:

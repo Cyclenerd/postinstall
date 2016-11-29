@@ -14,8 +14,8 @@
 
 # Where is the base url or dir. Without / at the end
 # Filesystem directory: BASE="/Users/nils/Scripts/postinstall/base"
-# Web: BASE="https://raw.githubusercontent.com/Cyclenerd/postinstall/master"
-BASE="https://raw.githubusercontent.com/Cyclenerd/postinstall/master"
+# Web: BASE="https://raw.githubusercontent.com/Cyclenerd/postinstall/master/base"
+BASE="https://raw.githubusercontent.com/Cyclenerd/postinstall/master/base"
 
 # Type of installation
 TYPE="server"
@@ -186,7 +186,7 @@ function check_fetcher() {
 	echo_step "Checking if curl is installed"
 	if command_exists curl; then
 		export CHECKER="curl --silent --head"
-		export FETCHER="curl --silent"
+		export FETCHER="curl -fs"
 	else
 		exit_with_failure "'curl' is needed. Please install 'curl'. More details can be found at https://curl.haxx.se/"
 	fi
