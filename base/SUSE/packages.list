@@ -1,0 +1,7 @@
+#
+# packages.list for SUSE and all TYPEs
+#
+# One package per line
+screen
+nano
+git
