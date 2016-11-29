@@ -1,0 +1,8 @@
+#
+# packages.list for DEBIAN and all TYPEs
+#
+# One package per line
+screen
+nano
+git
+ufw
