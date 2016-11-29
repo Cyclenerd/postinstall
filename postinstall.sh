@@ -185,8 +185,8 @@ function check_bash() {
 function check_fetcher() {
 	echo_step "Checking if curl is installed"
 	if command_exists curl; then
-		export CHECKER="curl --silent --head"
-		export FETCHER="curl -fs"
+		export CHECKER="curl --silent --head --header 'Cache-Control: no-cache'"
+		export FETCHER="curl -fs -H 'Cache-Control: no-cache'"
 	else
 		exit_with_failure "'curl' is needed. Please install 'curl'. More details can be found at https://curl.haxx.se/"
 	fi
