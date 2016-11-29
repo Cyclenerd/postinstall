@@ -104,17 +104,17 @@ Only `bash`, `curl` and a package manager for the respective operating system:
 * Red Hat → `dnf` or `yum`
 * SUSE    → `zypper`
 
-## Install
+## Installation
 
 Download:
 
 	curl -f https://raw.githubusercontent.com/Cyclenerd/postinstall/master/postinstall.sh -o postinstall.sh
 
-or
+Alternative download with short URL:
 
 	curl -fL http://bit.ly/get_postinstall -o postinstall.sh
 
-Run as root
+Run as root:
 
 	bash postinstall.sh
 
@@ -127,6 +127,10 @@ Run as root
 		[-h]        displays help
 
 Example: `postinstall.sh` or `postinstall.sh -t workstation`
+
+## Screenshot
+
+![Fedora](http://i.imgur.com/cMm0GIe.gif)
 
 ### TODO
 
