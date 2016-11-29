@@ -1,0 +1,5 @@
+#
+# packages.list for REDHAT and TYPE=server
+#
+# One package per line
+openssh-server

@@ -1,0 +1,6 @@
+#
+# packages.list for all OPERATING_SYSTEMs and TYPEs
+#
+# One package per line
+htop
+tmux

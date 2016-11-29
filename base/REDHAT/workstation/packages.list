@@ -1,0 +1,9 @@
+#
+# packages.list for REDHAT and TYPE=workstation
+#
+# One package per line
+ImageMagick
+jhead
+vlc
+ffmpeg-libs
+spotify-client

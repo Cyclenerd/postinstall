@@ -1,0 +1,5 @@
+#
+# packages.list for all OPERATING_SYSTEMs and TYPE=workstation
+#
+# One package per line
+git

@@ -1,0 +1,7 @@
+#
+# packages.list for FREEBSD and all TYPEs
+#
+# One package per line
+net-tools
+screen
+nano
