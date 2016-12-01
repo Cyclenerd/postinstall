@@ -49,8 +49,8 @@ function usage {
 #   seq does not exist under OpenBSD
 function echo_equals() {
 	COUNTER=0
-	while [  $COUNTER -lt $1 ]; do
-		printf '=%.0s'
+	while [  $COUNTER -lt "$1" ]; do
+		printf '='
 		let COUNTER=COUNTER+1 
 	done
 }
@@ -62,7 +62,7 @@ function echo_title() {
 	NEQUALS=$(((NCOLS-${#TITLE})/2-1))
 	tput setaf 3 0 0 # 3 = yellow
 	echo_equals "$NEQUALS"
-	printf " $TITLE "
+	printf " %s " "$TITLE"
 	echo_equals "$NEQUALS"
 	tput sgr0  # reset terminal
 	echo
@@ -165,10 +165,12 @@ function detect_hostname_fqdn() {
 	echo_step "Detecting FQDN"
 	if hostname -f &>/dev/null; then
 		echo -e "\nhostname -f" >>"$INSTALL_LOG"
-		export HOSTNAME_FQDN=$(hostname -f)
+		HOSTNAME_FQDN=$(hostname -f)
+		export HOSTNAME_FQDN
 	else
 		echo -e "\nhostname" >>"$INSTALL_LOG"
 		HOSTNAME_FQDN=$(hostname)
+		export HOSTNAME_FQDN
 	fi
 	echo_step_info "$HOSTNAME_FQDN"
 	echo_success
@@ -202,8 +204,8 @@ function check_bash() {
 function check_fetcher() {
 	echo_step "Checking if curl is installed"
 	if command_exists curl; then
-		export CHECKER="curl --silent --head --header 'Cache-Control: no-cache'"
-		export FETCHER="curl -fs -H 'Cache-Control: no-cache'"
+		# -f = Fail silently (no output at all) on server errors (404, 301, ...).
+		export FETCHER="curl -fs"
 	else
 		exit_with_failure "'curl' is needed. Please install 'curl'. More details can be found at https://curl.haxx.se/"
 	fi
@@ -515,14 +517,9 @@ function build_script() {
 		for INPUT_NAME in "${INPUT_ARRAY_NAME[@]}"; do
 			echo -e "\nchecking $INPUT_NAME" >>"$INSTALL_LOG"
 			echo -e "\n\n#$INPUT_NAME\n" >> "$OUTPUT_NAME"
-			if [[ $($CHECKER "$INPUT_NAME" | grep "HTTP/" | awk '{print $2}') == '200' ]]; then
-				echo -e "\n$FETCHER $INPUT_NAME >> $OUTPUT_NAME" >>"$INSTALL_LOG"
-				$FETCHER "$INPUT_NAME" >> "$OUTPUT_NAME"
-				if [ "$?" -ne 0 ]; then
-					exit_with_failure "Failed to append $INPUT_NAME to $OUTPUT_NAME"
-				fi
-				echo >> "$OUTPUT_NAME"
-			fi
+			echo -e "\n$FETCHER $INPUT_NAME >> $OUTPUT_NAME" >>"$INSTALL_LOG"
+			$FETCHER -H 'Cache-Control: no-cache' "$INPUT_NAME" >> "$OUTPUT_NAME"
+			echo >> "$OUTPUT_NAME"
 		done
 	else
 		for INPUT_NAME in "${INPUT_ARRAY_NAME[@]}"; do
