@@ -163,9 +163,13 @@ function command_exists() {
 # check if the hostname can be resolved locally
 function detect_hostname_fqdn() {
 	echo_step "Detecting FQDN"
-	echo -e "\nhostname -f" >>"$INSTALL_LOG"
-	HOSTNAME_FQDN=$(hostname -f)
-	export HOSTNAME_FQDN
+	if hostname -f &>/dev/null; then
+		echo -e "\nhostname -f" >>"$INSTALL_LOG"
+		export HOSTNAME_FQDN=$(hostname -f)
+	else
+		echo -e "\nhostname" >>"$INSTALL_LOG"
+		HOSTNAME_FQDN=$(hostname)
+	fi
 	echo_step_info "$HOSTNAME_FQDN"
 	echo_success
 }
