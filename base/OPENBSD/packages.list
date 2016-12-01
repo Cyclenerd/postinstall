@@ -2,7 +2,5 @@
 # packages.list for OPENBSD and all TYPEs
 #
 # One package per line
-screen
 nano
 git
-mutt
