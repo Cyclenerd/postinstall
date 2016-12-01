@@ -28,3 +28,31 @@ if [ "$?" -ne 0 ]; then
 else
 	echo_success
 fi
+
+
+# Build htop from source
+# Check out the latest version at the project page
+# https://hisham.hm/htop/releases/
+HTOP_RELEASE="2.0.2"
+
+echo_step "  Build htop from source"
+curl -sf "https://hisham.hm/htop/releases/$HTOP_RELEASE/htop-$HTOP_RELEASE.tar.gz" -o "/tmp/htop.tar.gz"
+if [ -f "/tmp/htop.tar.gz" ]; then
+	{
+		gunzip "/tmp/htop.tar.gz"
+		mkdir "/tmp/htop"
+		tar -xvf "/tmp/htop.tar.gz" -C "/tmp/htop"
+		cd /tmp/htop/htop*/ || return
+		./configure -q
+		make
+		make install
+		cd ~- || return
+	} >>"$INSTALL_LOG" 2>&1
+else
+	echo_warning "Failed to download, will attempt to continue"
+fi
+if command_exists htop; then
+	echo_success
+else
+	echo_warning "Failed to build, will attempt to continue"
+fi
