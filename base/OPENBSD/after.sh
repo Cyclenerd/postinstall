@@ -41,7 +41,7 @@ if [ -f "/tmp/htop.tar.gz" ]; then
 	{
 		gunzip "/tmp/htop.tar.gz"
 		mkdir "/tmp/htop"
-		tar -xvf "/tmp/htop.tar.gz" -C "/tmp/htop"
+		tar -xvf "/tmp/htop.tar" -C "/tmp/htop"
 		cd /tmp/htop/htop*/ || return
 		./configure -q
 		make
