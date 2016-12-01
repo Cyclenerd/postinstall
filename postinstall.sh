@@ -45,27 +45,39 @@ function usage {
 # Terminal output helpers
 ################################################################################
 
+# echo_equals() outputs a line with =
+#   seq does not exist under OpenBSD
+function echo_equals() {
+	COUNTER=0
+	while [  $COUNTER -lt $1 ]; do
+		printf '=%.0s'
+		let COUNTER=COUNTER+1 
+	done
+}
+
 # echo_title() outputs a title padded by =, in yellow.
 function echo_title() {
 	TITLE=$1
 	NCOLS=$(tput cols)
 	NEQUALS=$(((NCOLS-${#TITLE})/2-1))
-	EQUALS=$(printf '=%.0s' $(seq 1 $NEQUALS))
-	tput setaf 3  # 3 = yellow
-	echo "$EQUALS $TITLE $EQUALS"
+	tput setaf 3 0 0 # 3 = yellow
+	echo_equals "$NEQUALS"
+	printf " $TITLE "
+	echo_equals "$NEQUALS"
 	tput sgr0  # reset terminal
+	echo
 }
 
 # echo_step() outputs a step collored in cyan, without outputing a newline.
 function echo_step() {
-	tput setaf 6  # 6 = cyan
+	tput setaf 6 0 0 # 6 = cyan
 	echo -n "$1"
 	tput sgr0  # reset terminal
 }
 
 # echo_step_info() outputs additional step info in cyan, without a newline.
 function echo_step_info() {
-	tput setaf 6  # 6 = cyan
+	tput setaf 6 0 0 # 6 = cyan
 	echo -n " ($1)"
 	tput sgr0  # reset terminal
 }
@@ -82,21 +94,21 @@ function echo_right() {
 
 # echo_failure() outputs [ FAILED ] in red, at the rightmost side of the screen.
 function echo_failure() {
-	tput setaf 1  # 1 = red
+	tput setaf 1 0 0 # 1 = red
 	echo_right "[ FAILED ]"
 	tput sgr0  # reset terminal
 }
 
 # echo_success() outputs [ OK ] in green, at the rightmost side of the screen.
 function echo_success() {
-	tput setaf 2  # 2 = green
+	tput setaf 2 0 0 # 2 = green
 	echo_right "[ OK ]"
 	tput sgr0  # reset terminal
 }
 
 # echo_success() outputs a message and [ WARNING ] in yellow, at the rightmost side of the screen.
 function echo_warning() {
-	tput setaf 3  # 3 = yellow
+	tput setaf 3 0 0 # 3 = yellow
 	echo_right "[ WARNING ]"
 	tput sgr0  # reset terminal
 	echo "    ($1)"
