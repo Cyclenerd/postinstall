@@ -26,7 +26,7 @@ TYPE="server"
 
 ME=$(basename "$0")"$INSTALL_LOG"
 DATETIME=$(date "+%Y-%m-%d-%H-%M-%S")
-INSTALL="install"
+MY_INSTALL="install"
 
 ################################################################################
 # Usage
@@ -148,11 +148,13 @@ debug_variables() {
 	echo "OPERATING_SYSTEM_TYPE: $OPERATING_SYSTEM_TYPE"
 	echo "ARCHITECTURE: $ARCHITECTURE"
 	echo "INSTALL_LOG: $INSTALL_LOG"
-	echo "INSTALLER: $INSTALLER"
-	echo "INSTALL: $INSTALL"
+	echo "MY_INSTALLER: $MY_INSTALLER"
+	echo "MY_INSTALL: $MY_INSTALL"
 	echo "PACKAGES_LIST: $PACKAGES_LIST"
 	echo "BEFORE_SCRIPT: $BEFORE_SCRIPT"
 	echo "AFTER_SCRIPT: $AFTER_SCRIPT"
+	echo "FETCHER: $FETCHER"
+	echo "ASSUME_ALWAYS_YES: $ASSUME_ALWAYS_YES"
 }
 
 # command_exists() tells if a given command exists.
@@ -283,8 +285,8 @@ function detect_installer() {
 		DEBIAN)
 			if command_exists apt-get; then
 				echo -e "\napt-get found" >>"$INSTALL_LOG"
-				export INSTALLER="apt-get"
-				export INSTALL="-qq install"
+				export MY_INSTALLER="apt-get"
+				export MY_INSTALL="-qq install"
 			else
 				exit_with_failure "Command 'apt-get' not found"
 			fi
@@ -293,14 +295,14 @@ function detect_installer() {
 			# https://fedoraproject.org/wiki/Dnf
 			if command_exists dnf; then
 				echo -e "\ndnf found" >>"$INSTALL_LOG"
-				export INSTALLER="dnf"
-				export INSTALL="-y install"
+				export MY_INSTALLER="dnf"
+				export MY_INSTALL="-y install"
 			# https://fedoraproject.org/wiki/Yum
 			# As of Fedora 22, yum has been replaced with dnf.
 			elif command_exists yum; then
 				echo -e "\nyum found" >>"$INSTALL_LOG"
-				export INSTALLER="yum"
-				export INSTALL="-y install"
+				export MY_INSTALLER="yum"
+				export MY_INSTALL="-y install"
 			else
 				exit_with_failure "Either 'dnf' or 'yum' are needed"
 			fi
@@ -315,8 +317,8 @@ function detect_installer() {
 			# https://en.opensuse.org/Zypper
 			if command_exists zypper; then
 				echo -e "\zypper found" >>"$INSTALL_LOG"
-				export INSTALLER="zypper"
-				export INSTALL="install -y"
+				export MY_INSTALLER="zypper"
+				export MY_INSTALL="install -y"
 			else
 				exit_with_failure "Command 'zypper' not found"
 			fi
@@ -329,8 +331,8 @@ function detect_installer() {
 				if [[ $(pkg -N) -ne 0 ]]; then
 					exit_with_failure "pkg is not installed. Please run '/usr/sbin/pkg'"
 				fi
-				export INSTALLER="pkg"
-				export INSTALL="install"
+				export MY_INSTALLER="pkg"
+				export MY_INSTALL="install"
 			else
 				exit_with_failure "Command 'pkg' not found"
 			fi
@@ -339,8 +341,8 @@ function detect_installer() {
 			# http://man.openbsd.org/pkg_add
 			if command_exists pkg_add; then
 				echo -e "\pkg_add found" >>"$INSTALL_LOG"
-				export INSTALLER="pkg_add"
-				export INSTALL="-I"
+				export MY_INSTALLER="pkg_add"
+				export MY_INSTALL="-I"
 			else
 				exit_with_failure "Command 'pkg_add' not found"
 			fi
@@ -355,8 +357,8 @@ function detect_installer() {
 					exit_with_failure "Command 'wget' not found. 'apt-cyg' requires 'wget'."
 				
 				fi
-				export INSTALLER="apt-cyg"
-				export INSTALL="install"
+				export MY_INSTALLER="apt-cyg"
+				export MY_INSTALL="install"
 			else
 				{
 					echo
@@ -372,13 +374,13 @@ function detect_installer() {
 			# https://www.macports.org/
 			if command_exists port; then
 				echo -e "\nport found" >>"$INSTALL_LOG"
-				export INSTALLER="port"
-				export INSTALL="-q install"
+				export MY_INSTALLER="port"
+				export MY_INSTALL="-q install"
 			# http://brew.sh/
 			elif command_exists brew; then
 				echo -e "\nbrew found" >>"$INSTALL_LOG"
-				export INSTALLER="brew"
-				export INSTALL="install"
+				export MY_INSTALLER="brew"
+				export MY_INSTALL="install"
 			else
 				exit_with_failure "Either 'port' or 'brew' are needed. More details can be found at https://www.macports.org/install.php"
 			fi
@@ -396,67 +398,67 @@ function detect_installer() {
 # resync_installer() re-synchronize the package index and install the newest versions of all packages currently installed
 function resync_installer() {
 	echo_step "Re-synchronizing the package index and install the newest versions (please wait, sometimes takes a little longer...)"
-	case $INSTALLER in
+	case $MY_INSTALLER in
 		apt-get)
-			$INSTALLER update >>"$INSTALL_LOG" 2>&1
+			$MY_INSTALLER update >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $INSTALLER update"
+				exit_with_message "Failed to do $MY_INSTALLER update"
 			fi
-			$INSTALLER -qq upgrade >>"$INSTALL_LOG" 2>&1
+			$MY_INSTALLER -qq upgrade >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $INSTALLER upgrade"
+				exit_with_message "Failed to do $MY_INSTALLER upgrade"
 			fi
 			;;
 		dnf|yum)
-			$INSTALLER -y update >>"$INSTALL_LOG" 2>&1
+			$MY_INSTALLER -y update >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $INSTALLER update"
+				exit_with_message "Failed to do $MY_INSTALLER update"
 			fi
 			;;
 		zypper)
-			$INSTALLER update -y >>"$INSTALL_LOG" 2>&1
+			$MY_INSTALLER update -y >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $INSTALLER update"
+				exit_with_message "Failed to do $MY_INSTALLER update"
 			fi
 			;;
 		pkg)
-			$INSTALLER upgrade >>"$INSTALL_LOG" 2>&1
+			$MY_INSTALLER upgrade >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $INSTALLER upgrade"
+				exit_with_message "Failed to do $MY_INSTALLER upgrade"
 			fi
 			;;
 		apt-cyg)
-			$INSTALLER update >>"$INSTALL_LOG" 2>&1
+			$MY_INSTALLER update >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $INSTALLER update"
+				exit_with_message "Failed to do $MY_INSTALLER update"
 			fi
 			;;
 		brew)
-			$INSTALLER update >>"$INSTALL_LOG" 2>&1
+			$MY_INSTALLER update >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $INSTALLER update"
+				exit_with_message "Failed to do $MY_INSTALLER update"
 			fi
-			$INSTALLER upgrade >>"$INSTALL_LOG" 2>&1
+			$MY_INSTALLER upgrade >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $INSTALLER upgrade"
+				exit_with_message "Failed to do $MY_INSTALLER upgrade"
 			fi
 			;;
 		port)
-			$INSTALLER -q selfupdate >>"$INSTALL_LOG" 2>&1
+			$MY_INSTALLER -q selfupdate >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $INSTALLER selfupdate"
+				exit_with_message "Failed to do $MY_INSTALLER selfupdate"
 			fi
-			$INSTALLER -q upgrade outdated >>"$INSTALL_LOG" 2>&1
+			$MY_INSTALLER -q upgrade outdated >>"$INSTALL_LOG" 2>&1
 			# 0 = OK
 			# 1 = nothing to upgrade
 			if [ "$?" -gt 1 ]; then
-				exit_with_message "Failed to do $INSTALLER upgrade outdated"
+				exit_with_message "Failed to do $MY_INSTALLER upgrade outdated"
 			fi
 			;;
 		pkg_add)
-			$INSTALLER -UuI >>"$INSTALL_LOG" 2>&1
+			$MY_INSTALLER -UuI >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $INSTALLER update"
+				exit_with_message "Failed to do $MY_INSTALLER update"
 			fi
 			;;
 	esac
@@ -654,8 +656,8 @@ if [ -f "$PACKAGES_LIST" ]; then
 	while IFS='' read -r PACKAGE || [[ -n "$PACKAGE" ]]; do
 		if [[ "$PACKAGE" == [a-z]* ]] || [[ "$PACKAGE" == [A-Z]* ]]; then
 			echo_step "  $PACKAGE"
-			echo -e "\n$INSTALLER $INSTALL $PACKAGE" >>"$INSTALL_LOG"
-			$INSTALLER $INSTALL "$PACKAGE" >>"$INSTALL_LOG" 2>&1
+			echo -e "\n$MY_INSTALLER $INSTALL $PACKAGE" >>"$INSTALL_LOG"
+			$MY_INSTALLER $MY_INSTALL "$PACKAGE" >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
 				echo_warning "Failed to install, will attempt to continue"
 			else
@@ -677,5 +679,8 @@ else
 	exit_with_failure "'$AFTER_SCRIPT' not found."
 fi
 
+echo_title "Done"
+
 echo
 echo
+{ echo; debug_variables; } >>"$INSTALL_LOG"

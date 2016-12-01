@@ -4,7 +4,7 @@
 
 # Add RPMFusion for ffmpeg-libs
 echo_step "  Installing RPM Fusion free and nonfree repositories"
-$INSTALLER $INSTALL "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
+$MY_INSTALLER $MY_INSTALL "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
 	"https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm" >>"$INSTALL_LOG" 2>&1
 if [ "$?" -ne 0 ]; then
 	echo_warning "Failed to install repositories, will attempt to continue"
