@@ -236,6 +236,10 @@ function detect_operating_system() {
 		OPERATING_SYSTEM="FREEBSD"
 		# FreeBSD pkg automatically assume "yes"
 		export ASSUME_ALWAYS_YES="yes"
+	elif [ "$OPERATING_SYSTEM_TYPE" = "OpenBSD" ]; then
+		echo -e "\ntest OPERATING_SYSTEM_TYPE" >>"$INSTALL_LOG"
+		echo_step_info "OpenBSD"
+		OPERATING_SYSTEM="OPENBSD"
 	elif [ "$OPERATING_SYSTEM_TYPE" = "Cygwin" ]; then
 		echo -e "\ntest OPERATING_SYSTEM_TYPE" >>"$INSTALL_LOG"
 		echo_step_info "Cygwin"
@@ -300,7 +304,7 @@ function detect_installer() {
 			fi
 			;;
 		FREEBSD)
-			# https://en.opensuse.org/Zypper
+			# https://www.freebsd.org/doc/handbook/pkgng-intro.html
 			if command_exists pkg; then
 				echo -e "\pkg found" >>"$INSTALL_LOG"
 				# pkg activation status check
@@ -311,6 +315,16 @@ function detect_installer() {
 				export INSTALL="install"
 			else
 				exit_with_failure "Command 'pkg' not found"
+			fi
+			;;
+		OPENBSD)
+			# http://man.openbsd.org/pkg_add
+			if command_exists pkg_add; then
+				echo -e "\pkg_add found" >>"$INSTALL_LOG"
+				export INSTALLER="pkg_add"
+				export INSTALL="-I"
+			else
+				exit_with_failure "Command 'pkg_add' not found"
 			fi
 			;;
 		CYGWIN)
@@ -419,6 +433,12 @@ function resync_installer() {
 			# 1 = nothing to upgrade
 			if [ "$?" -gt 1 ]; then
 				exit_with_message "Failed to do $INSTALLER upgrade outdated"
+			fi
+			;;
+		pkg_add)
+			$INSTALLER -UuI >>"$INSTALL_LOG" 2>&1
+			if [ "$?" -ne 0 ]; then
+				exit_with_message "Failed to do $INSTALLER update"
 			fi
 			;;
 	esac

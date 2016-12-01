@@ -65,6 +65,7 @@ Only `bash`, `curl` and a package manager for the respective operating system:
 * Debian  → `apt-get`
 * FreeBSD → `pkg`
 * macOS   → `port` or `brew`
+* OpenBSD → `pkg_add`
 * Red Hat → `dnf` or `yum`
 * SUSE    → `zypper`
 
