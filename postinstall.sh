@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # postinstall.sh
-# Author: Nils Knieling - https://github.com/Cyclenerd/install_shell
+# Author: Nils Knieling - https://github.com/Cyclenerd/postinstall
 # Inspired by: Wavefront - https://github.com/wavefrontHQ/install
 
 # Bash Script to automate post-installation steps. Helps to 
