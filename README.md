@@ -49,7 +49,7 @@ Example: `postinstall.sh` or `postinstall.sh -t workstation`
 ![Fedora](http://i.imgur.com/cMm0GIe.gif)
 
 
-### Program Flow
+## Program Flow
 
 * Determine operating system and architecture
 * Check package manager and requirements
@@ -69,7 +69,7 @@ Only `bash`, `curl` and a package manager for the respective operating system:
 * SUSE    → `zypper`
 
 
-### TODO
+## TODO
 
 * More and better documentation
 * More tests
