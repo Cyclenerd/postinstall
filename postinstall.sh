@@ -238,9 +238,13 @@ function detect_operating_system() {
 		echo -e "\ntest -f /etc/debian_version" >>"$INSTALL_LOG"
 		echo_step_info "Debian/Ubuntu"
 		OPERATING_SYSTEM="DEBIAN"
+	elif [ -f /etc/arch-release ]; then
+		echo -e "\ntest -f /etc/arch-release" >>"$INSTALL_LOG"
+		echo_step_info "Arch Linux"
+		OPERATING_SYSTEM="ARCH"
 	elif [ -f /etc/redhat-release ] || [ -f /etc/system-release-cpe ]; then
 		echo -e "\ntest -f /etc/redhat-release || test -f /etc/system-release-cpe" >>"$INSTALL_LOG"
-		echo_step_info "RedHat/CentOS"
+		echo_step_info "Red Hat / CentOS"
 		OPERATING_SYSTEM="REDHAT"
 	elif [ -f /etc/SUSE-brand ] || [ -f /etc/SuSE-brand ] || [ -f /etc/SuSE-release ]; then
 		echo -e "\ntest -f /etc/SUSE-brand || test -f /etc/SuSE-brand || test -f /etc/SuSE-release" >>"$INSTALL_LOG"
@@ -267,6 +271,7 @@ function detect_operating_system() {
 	else
 		{
 			echo -e "\ntest -f /etc/debian_version"
+			echo -e "\ntest -f /etc/arch-release"
 			echo -e "\ntest -f /etc/redhat-release || test -f /etc/system-release-cpe"
 			echo -e "\ntest -f /etc/SUSE-brand || test -f /etc/SuSE-brand || test -f /etc/SuSE-release"
 			echo -e "\ntest -f /System/Library/CoreServices/SystemVersion.plist"
@@ -282,6 +287,15 @@ function detect_operating_system() {
 function detect_installer() {
 	echo_step "  Checking installation tools"
 	case $OPERATING_SYSTEM in
+		ARCH)
+			if command_exists pacman; then
+				echo -e "\npacman found" >>"$INSTALL_LOG"
+				export MY_INSTALLER="pacman"
+				export MY_INSTALL="-S --noconfirm"
+			else
+				exit_with_failure "Command 'pacman' not found"
+			fi
+			;;
 		DEBIAN)
 			if command_exists apt-get; then
 				echo -e "\napt-get found" >>"$INSTALL_LOG"
@@ -419,6 +433,12 @@ function resync_installer() {
 			$MY_INSTALLER update -y >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
 				exit_with_message "Failed to do $MY_INSTALLER update"
+			fi
+			;;
+		pacman)
+			$MY_INSTALLER -Syu --noconfirm >>"$INSTALL_LOG" 2>&1
+			if [ "$?" -ne 0 ]; then
+				exit_with_message "Failed to do $MY_INSTALLER upgrade"
 			fi
 			;;
 		pkg)
