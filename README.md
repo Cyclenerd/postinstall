@@ -3,6 +3,16 @@
 Bash Script to automate post-installation steps.
 Helps to install packages on different operating systems.
 
+![Apple macOS](https://www.nkn-it.de/img/distro/logos/apple-osx.png)
+![Arch Linux](https://www.nkn-it.de/img/distro/logos/arch.png)
+![CentOS](https://www.nkn-it.de/img/distro/logos/centos.png)
+![Debian](https://www.nkn-it.de/img/distro/logos/debian.png)
+![Fedora](https://www.nkn-it.de/img/distro/logos/fedora.png)
+![FreeBSD](https://www.nkn-it.de/img/distro/logos/freebsd.png)
+![OpenBSD](https://www.nkn-it.de/img/distro/logos/openbsd.png)
+![Red Hat](https://www.nkn-it.de/img/distro/logos/redhat.png)
+![SUSE](https://www.nkn-it.de/img/distro/logos/opensuse.png)
+![Ubuntu](https://www.nkn-it.de/img/distro/logos/ubuntu.png)
 
 ## Overview
 
@@ -61,13 +71,14 @@ Example: `postinstall.sh` or `postinstall.sh -t workstation`
 
 Only `bash`, `curl` and a package manager for the respective operating system:
 
-* Cygwin  → `apt-cyg`
-* Debian  → `apt-get`
-* FreeBSD → `pkg`
-* macOS   → `port` or `brew`
-* OpenBSD → `pkg_add`
-* Red Hat → `dnf` or `yum`
-* SUSE    → `zypper`
+* Apple macOS               → `port` or `brew`
+* Arch Linux                → `pacman`
+* Cygwin                    → `apt-cyg`
+* Debian / Ubuntu           → `apt-get`
+* FreeBSD                   → `pkg`
+* OpenBSD                   → `pkg_add`
+* Red Hat / Fedora / CentOS → `dnf` or `yum`
+* SUSE / openSUSE           → `zypper`
 
 
 ## TODO
@@ -75,7 +86,7 @@ Only `bash`, `curl` and a package manager for the respective operating system:
 * More and better documentation
 * More tests
 	* `brew` is currently not tested
-* Support for even more operating systems (NetBSD, Arch Linux) and package managers
+* Support for even more operating systems (NetBSD, Gentoo Linux) and package managers
 
 Help is welcome 👍
 
