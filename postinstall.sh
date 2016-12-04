@@ -106,7 +106,7 @@ function echo_success() {
 	tput sgr0  # reset terminal
 }
 
-# echo_success() outputs a message and [ WARNING ] in yellow, at the rightmost side of the screen.
+# echo_warning() outputs a message and [ WARNING ] in yellow, at the rightmost side of the screen.
 function echo_warning() {
 	tput setaf 3 0 0 # 3 = yellow
 	echo_right "[ WARNING ]"
