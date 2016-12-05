@@ -24,7 +24,7 @@ TYPE="server"
 #### END Configuration Section
 ################################################################################
 
-ME=$(basename "$0")"$INSTALL_LOG"
+ME=$(basename "$0")
 DATETIME=$(date "+%Y-%m-%d-%H-%M-%S")
 MY_INSTALL="install"
 
