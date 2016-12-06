@@ -5,6 +5,12 @@
 ImageMagick
 jhead
 vlc
+gvfs-smb
+firefox
+filezilla
+keepassx
+gedit
+xpdf
+nmap
 ffmpeg-libs
 spotify-client
-gvfs-smb
