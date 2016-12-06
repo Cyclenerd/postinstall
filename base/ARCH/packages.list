@@ -2,6 +2,7 @@
 # packages.list for ARCH and all TYPEs
 #
 # One package per line
+systemd-swap
 net-tools
 openssh
 postfix
