@@ -28,8 +28,13 @@ ME=$(basename "$0")
 DATETIME=$(date "+%Y-%m-%d-%H-%M-%S")
 MY_INSTALL="install"
 
-export LC_CTYPE='en_US.UTF-8'
-export LC_ALL='en_US.UTF-8'
+if [[ ! $LC_CTYPE ]]; then
+	export LC_CTYPE='en_US.UTF-8'
+fi
+if [[ ! $LC_ALL ]]; then
+	export LC_ALL='en_US.UTF-8'
+fi
+
 
 ################################################################################
 # Usage
