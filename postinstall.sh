@@ -176,14 +176,20 @@ function detect_hostname_fqdn() {
 	if hostname -f &>/dev/null; then
 		echo -e "\nhostname -f" >>"$INSTALL_LOG"
 		HOSTNAME_FQDN=$(hostname -f)
-		export HOSTNAME_FQDN
-	else
+		echo_step_info "$HOSTNAME_FQDN"
+		echo_success
+	elif hostname &>/dev/null; then
 		echo -e "\nhostname" >>"$INSTALL_LOG"
 		HOSTNAME_FQDN=$(hostname)
-		export HOSTNAME_FQDN
+		echo_step_info "$HOSTNAME_FQDN"
+		echo_success
+	else
+		echo -e "\nhostname could not be determined" >>"$INSTALL_LOG"
+		HOSTNAME_FQDN="foo.bar"
+		echo_step_info "$HOSTNAME_FQDN"
+		echo_warning "Hostname could not be determined, will attempt to continue"
 	fi
-	echo_step_info "$HOSTNAME_FQDN"
-	echo_success
+	export HOSTNAME_FQDN
 }
 
 # check_if_root_or_die() verifies if the script is being run as root and exits
@@ -212,7 +218,7 @@ function check_bash() {
 
 # check_fetcher() check if curl is installed
 function check_fetcher() {
-	echo_step "Checking if curl is installed"
+	echo_step "  Checking if curl is installed"
 	if command_exists curl; then
 		# -f = Fail silently (no output at all) on server errors (404, 301, ...).
 		export FETCHER="curl -fs"
@@ -425,7 +431,7 @@ function detect_installer() {
 
 # resync_installer() re-synchronize the package index and install the newest versions of all packages currently installed
 function resync_installer() {
-	echo_step "Re-synchronizing the package index and install the newest versions (please wait, sometimes takes a little longer...)"
+	echo_step "  Re-sync. the package index and install the newest versions (please wait, sometimes takes a little longer...)"
 	case $MY_INSTALLER in
 		apt-get)
 			$MY_INSTALLER update >>"$INSTALL_LOG" 2>&1
@@ -545,7 +551,7 @@ function build_script() {
 	OUTPUT_NAME=${INPUT_ARRAY_NAME[last_idx]}
 	unset "INPUT_ARRAY_NAME[last_idx]"
 	
-	echo_step "  Creating script $OUTPUT_NAME"
+	echo_step "  '$OUTPUT_NAME'"
 	
 	echo '#/bin/bash' > "$OUTPUT_NAME"
 	
@@ -623,6 +629,8 @@ resync_installer
 #  If not try to install curl
 check_fetcher
 
+
+echo_step "Creating scripts"; echo
 
 # Set script sources
 PACKAGE_SOURCES=(
