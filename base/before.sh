@@ -13,12 +13,13 @@ export MY_USERNAME='nils'
 echo_step "  Get primary user group from user"
 echo_step_info "$MY_USERNAME"
 echo -e "\nid -gn $MY_USERNAME" >>"$INSTALL_LOG"
-if MY_PRIMARY_GROUP=$(id -gn "$MY_USERNAME"); then
-	echo "primary user group from user $MY_USERNAME is $MY_PRIMARY_GROUP" >>"$INSTALL_LOG"
+if id -gn "$MY_USERNAME" >> "$INSTALL_LOG" 2>&1; then
+	MY_PRIMARY_GROUP=$(id -gn "$MY_USERNAME" >> "$INSTALL_LOG" 2>&1)
 	export MY_PRIMARY_GROUP
+	echo "primary user group from user $MY_USERNAME is $MY_PRIMARY_GROUP" >>"$INSTALL_LOG"
 	echo_success
 else
-	echo_warning "'User does not exist, will attempt to continue'"
+	echo_warning "User '$MY_USERNAME' does not exist, will attempt to continue"
 fi
 
 # Create private SSH key

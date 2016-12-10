@@ -15,7 +15,8 @@ if [ -d "$SSHD_KEY_DIR" ]; then
 	echo_step "  Generating new SSH Daemon Keys in $SSHD_KEY_DIR (please wait)"; echo
 	
 	# Delete old keys
-	rm "$SSHD_KEY_DIR"/ssh_host_*
+	echo -e "\n rm $SSHD_KEY_DIR/ssh_host_*" >>"$INSTALL_LOG"
+	rm "$SSHD_KEY_DIR"/ssh_host_* >> "$INSTALL_LOG" 2>&1
 	
 	for SSHD_KEY_TYPE in ${SSHD_KEY_TYPES[*]}; do
 		echo_step "    $SSHD_KEY_TYPE"
