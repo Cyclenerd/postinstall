@@ -254,8 +254,8 @@ function detect_operating_system() {
 		echo -e "\ntest -f /etc/redhat-release || test -f /etc/system-release-cpe" >>"$INSTALL_LOG"
 		echo_step_info "Red Hat / CentOS"
 		OPERATING_SYSTEM="REDHAT"
-	elif [ -f /etc/SUSE-brand ] || [ -f /etc/SuSE-brand ] || [ -f /etc/SuSE-release ]; then
-		echo -e "\ntest -f /etc/SUSE-brand || test -f /etc/SuSE-brand || test -f /etc/SuSE-release" >>"$INSTALL_LOG"
+	elif [ -f /etc/SUSE-brand ] || [ -f /etc/SuSE-brand ] || [ -f /etc/SuSE-release ] || [ -d /etc/susehelp.d ]; then
+		echo -e "\ntest -f /etc/SUSE-brand || test -f /etc/SuSE-brand || test -f /etc/SuSE-release || test -d /etc/susehelp.d" >>"$INSTALL_LOG"
 		echo_step_info "SuSE"
 		OPERATING_SYSTEM="SUSE"
 	elif [ -f /System/Library/CoreServices/SystemVersion.plist ]; then
