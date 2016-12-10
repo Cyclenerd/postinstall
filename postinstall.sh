@@ -217,7 +217,13 @@ function check_fetcher() {
 		# -f = Fail silently (no output at all) on server errors (404, 301, ...).
 		export FETCHER="curl -fs"
 	else
-		exit_with_failure "'curl' is needed. Please install 'curl'. More details can be found at https://curl.haxx.se/"
+		echo_step_info "Try to install curl"
+		echo -e "\n$MY_INSTALLER $INSTALL curl" >>"$INSTALL_LOG"
+		if $MY_INSTALLER $MY_INSTALL "curl" >>"$INSTALL_LOG" 2>&1; then
+			export FETCHER="curl -fs"
+		else
+			exit_with_failure "'curl' is needed. Please install 'curl'. More details can be found at https://curl.haxx.se/"
+		fi
 	fi
 	echo_success
 }
@@ -602,7 +608,6 @@ set_packages_list
 detect_hostname_fqdn
 detect_operating_system
 detect_architecture
-check_fetcher
 check_if_root_or_die
 
 
@@ -610,6 +615,14 @@ echo_step "Preparing to Install"; echo
 
 # Detect package manager 
 detect_installer
+
+# Re-sync package index
+resync_installer
+
+# Checking if curl is installed
+#  If not try to install curl
+check_fetcher
+
 
 # Set script sources
 PACKAGE_SOURCES=(
@@ -644,9 +657,6 @@ build_script "${AFTER_SOURCES[@]}" "$AFTER_SCRIPT"
 
 # Create a list of packages to install
 build_script "${PACKAGE_SOURCES[@]}" "$PACKAGES_LIST"
-
-# Re-sync package index
-resync_installer
 
 echo_title "Install"
 
