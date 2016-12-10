@@ -436,69 +436,69 @@ function resync_installer() {
 		apt-get)
 			$MY_INSTALLER update >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $MY_INSTALLER update"
+				exit_with_failure "Failed to do $MY_INSTALLER update"
 			fi
 			$MY_INSTALLER -qq upgrade >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $MY_INSTALLER upgrade"
+				exit_with_failure "Failed to do $MY_INSTALLER upgrade"
 			fi
 			;;
 		dnf|yum)
 			$MY_INSTALLER -y update >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $MY_INSTALLER update"
+				exit_with_failure "Failed to do $MY_INSTALLER update"
 			fi
 			;;
 		zypper)
 			$MY_INSTALLER update -y >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $MY_INSTALLER update"
+				exit_with_failure "Failed to do $MY_INSTALLER update"
 			fi
 			;;
 		pacman)
 			$MY_INSTALLER -Syu --noconfirm >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $MY_INSTALLER upgrade"
+				exit_with_failure "Failed to do $MY_INSTALLER upgrade"
 			fi
 			;;
 		pkg)
 			$MY_INSTALLER upgrade >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $MY_INSTALLER upgrade"
+				exit_with_failure "Failed to do $MY_INSTALLER upgrade"
 			fi
 			;;
 		apt-cyg)
 			$MY_INSTALLER update >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $MY_INSTALLER update"
+				exit_with_failure "Failed to do $MY_INSTALLER update"
 			fi
 			;;
 		brew)
 			$MY_INSTALLER update >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $MY_INSTALLER update"
+				exit_with_failure "Failed to do $MY_INSTALLER update"
 			fi
 			$MY_INSTALLER upgrade >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $MY_INSTALLER upgrade"
+				exit_with_failure "Failed to do $MY_INSTALLER upgrade"
 			fi
 			;;
 		port)
 			$MY_INSTALLER -q selfupdate >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $MY_INSTALLER selfupdate"
+				exit_with_failure "Failed to do $MY_INSTALLER selfupdate"
 			fi
 			$MY_INSTALLER -q upgrade outdated >>"$INSTALL_LOG" 2>&1
 			# 0 = OK
 			# 1 = nothing to upgrade
 			if [ "$?" -gt 1 ]; then
-				exit_with_message "Failed to do $MY_INSTALLER upgrade outdated"
+				exit_with_failure "Failed to do $MY_INSTALLER upgrade outdated"
 			fi
 			;;
 		pkg_add)
 			$MY_INSTALLER -UuI >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
-				exit_with_message "Failed to do $MY_INSTALLER update"
+				exit_with_failure "Failed to do $MY_INSTALLER update"
 			fi
 			;;
 	esac
