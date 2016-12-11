@@ -350,7 +350,7 @@ function detect_installer() {
 		SUSE)
 			# https://en.opensuse.org/Zypper
 			if command_exists zypper; then
-				echo -e "\zypper found" >>"$INSTALL_LOG"
+				echo -e "\nzypper found" >>"$INSTALL_LOG"
 				export MY_INSTALLER="zypper"
 				export MY_INSTALL="install -y"
 			else
@@ -360,7 +360,7 @@ function detect_installer() {
 		FREEBSD)
 			# https://www.freebsd.org/doc/handbook/pkgng-intro.html
 			if command_exists pkg; then
-				echo -e "\pkg found" >>"$INSTALL_LOG"
+				echo -e "\npkg found" >>"$INSTALL_LOG"
 				# pkg activation status check
 				if [[ $(pkg -N) -ne 0 ]]; then
 					exit_with_failure "pkg is not installed. Please run '/usr/sbin/pkg'"
@@ -374,7 +374,7 @@ function detect_installer() {
 		OPENBSD)
 			# http://man.openbsd.org/pkg_add
 			if command_exists pkg_add; then
-				echo -e "\pkg_add found" >>"$INSTALL_LOG"
+				echo -e "\npkg_add found" >>"$INSTALL_LOG"
 				export MY_INSTALLER="pkg_add"
 				export MY_INSTALL="-I"
 			else
@@ -384,7 +384,7 @@ function detect_installer() {
 		CYGWIN)
 			# https://github.com/transcode-open/apt-cyg
 			if command_exists apt-cyg; then
-				echo -e "\apt-cyg found" >>"$INSTALL_LOG"
+				echo -e "\napt-cyg found" >>"$INSTALL_LOG"
 				if command_exists wget; then
 					echo -e "\wget found" >>"$INSTALL_LOG"
 				else
