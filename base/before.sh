@@ -15,7 +15,7 @@ if id -u "$MY_USERNAME" >> "$INSTALL_LOG" 2>&1; then
 	echo -e "\nuser $MY_USERNAME found" >>"$INSTALL_LOG"
 else
 	echo -e "\ncreate new user $MY_USERNAME" >>"$INSTALL_LOG"
-	echo_step "  Create user"
+	echo_step "  Create user and add to group 'wheel'"
 	echo_step_info "$MY_USERNAME"
 	case $OPERATING_SYSTEM in
 		ARCH)
