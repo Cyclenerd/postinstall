@@ -1,4 +1,4 @@
-# postinstall
+# postinstall.sh
 
 Bash Script to automate post-installation steps.
 Helps to install packages on different operating systems.
