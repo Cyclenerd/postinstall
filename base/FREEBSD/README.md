@@ -22,9 +22,9 @@ For earlier FreeBSD versions, pkg must instead be installed from the Ports Colle
 
 To install the port, run:
 
-	cd /usr/ports/ports-mgmt/pkg
-	make
-	make install clean
+	# cd /usr/ports/ports-mgmt/pkg
+	# make
+	# make install clean
 
 ### Install bash
 
