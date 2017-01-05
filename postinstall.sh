@@ -163,6 +163,8 @@ debug_variables() {
 	echo "AFTER_SCRIPT: $AFTER_SCRIPT"
 	echo "FETCHER: $FETCHER"
 	echo "ASSUME_ALWAYS_YES: $ASSUME_ALWAYS_YES"
+	echo "TRAVIS: $TRAVIS"
+	echo "TRAVIS_OS_NAME: $TRAVIS_OS_NAME"
 }
 
 # command_exists() tells if a given command exists.
@@ -438,9 +440,13 @@ function resync_installer() {
 			if [ "$?" -ne 0 ]; then
 				exit_with_failure "Failed to do $MY_INSTALLER update"
 			fi
-			$MY_INSTALLER -qq upgrade >>"$INSTALL_LOG" 2>&1
-			if [ "$?" -ne 0 ]; then
-				exit_with_failure "Failed to do $MY_INSTALLER upgrade"
+			if [ -z "$TRAVIS" ]; then
+				$MY_INSTALLER -qq upgrade >>"$INSTALL_LOG" 2>&1
+				if [ "$?" -ne 0 ]; then
+					exit_with_failure "Failed to do $MY_INSTALLER upgrade"
+				fi
+			else
+				echo "!!! Travis CI detected. No long upgrade is performed. !!!" >>"$INSTALL_LOG"
 			fi
 			;;
 		dnf|yum)
