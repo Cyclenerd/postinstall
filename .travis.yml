@@ -6,5 +6,7 @@ os:
 before_script:
   - curl -f "https://raw.githubusercontent.com/lehmannro/assert.sh/v1.1/assert.sh" -o assert.sh
 script:
+  - sudo echo "Travis $TRAVIS"
+  - sudo echo "Travis OS $TRAVIS_OS_NAME"
   - travis_wait 30 sudo bash postinstall.sh -t server
   - bash tests.sh

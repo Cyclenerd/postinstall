@@ -154,6 +154,10 @@ function exit_with_failure() {
 
 # debug_variables() print all script global variables to ease debugging
 debug_variables() {
+	echo "USERNAME: $USERNAME"
+	echo "SHELL: $SHELL"
+	echo "BASH_VERSION: $BASH_VERSION"
+	echo
 	echo "BASE: $BASE"
 	echo "TYPE: $TYPE"
 	echo "HOSTNAME_FQDN: $HOSTNAME_FQDN"
@@ -168,6 +172,7 @@ debug_variables() {
 	echo "AFTER_SCRIPT: $AFTER_SCRIPT"
 	echo "FETCHER: $FETCHER"
 	echo "ASSUME_ALWAYS_YES: $ASSUME_ALWAYS_YES"
+	echo "MY_HOMEBREW_USER: $MY_HOMEBREW_USER"
 }
 
 # command_exists() tells if a given command exists.
