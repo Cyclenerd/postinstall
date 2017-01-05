@@ -20,11 +20,6 @@ BASE="https://raw.githubusercontent.com/Cyclenerd/postinstall/master/base"
 # Type of installation
 TYPE="server"
 
-# Only for macOS and Homebrew
-#    Running Homebrew as root is extremely dangerous and no longer supported
-# Username for Homebrew
-MY_HOMEBREW_USER="nils"
-
 ################################################################################
 #### END Configuration Section
 ################################################################################
@@ -173,7 +168,6 @@ debug_variables() {
 	echo "FETCHER: $FETCHER"
 	echo "ASSUME_ALWAYS_YES: $ASSUME_ALWAYS_YES"
 	echo "SUDO_USER: $SUDO_USER"
-	echo "MY_HOMEBREW_USER: $MY_HOMEBREW_USER"
 }
 
 # command_exists() tells if a given command exists.
@@ -435,7 +429,9 @@ function detect_installer() {
 			# http://brew.sh/
 			elif command_exists brew; then
 				echo -e "\nbrew found" >>"$INSTALL_LOG"
-				export MY_INSTALLER="brew"
+				# Running Homebrew as root is extremely dangerous and no longer supported
+				# Use SUDO_USER for Homebrew
+				export MY_INSTALLER="sudo -u $SUDO_USER brew"
 				export MY_INSTALL="install"
 			else
 				exit_with_failure "Either 'port' or 'brew' are needed. More details can be found at https://www.macports.org/install.php"
@@ -500,11 +496,11 @@ function resync_installer() {
 			fi
 			;;
 		brew)
-			sudo -u $MY_HOMEBREW_USER $MY_INSTALLER update | sudo tee -a "$INSTALL_LOG" 2>&1
+			$MY_INSTALLER update | sudo tee -a "$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
 				exit_with_failure "Failed to do $MY_INSTALLER update"
 			fi
-			$MY_INSTALLER upgrade >>"$INSTALL_LOG" 2>&1
+			$MY_INSTALLER upgrade | sudo tee -a "$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
 				exit_with_failure "Failed to do $MY_INSTALLER upgrade"
 			fi
@@ -730,7 +726,7 @@ if [ -f "$PACKAGES_LIST" ]; then
 			echo_step "  $PACKAGE"
 			echo -e "\n$MY_INSTALLER $INSTALL $PACKAGE" >>"$INSTALL_LOG"
 			if [[ $MY_INSTALLER == "brew " ]]; then
-				sudo -u $MY_HOMEBREW_USER $MY_INSTALLER $MY_INSTALL "$PACKAGE" | sudo tee -a "$INSTALL_LOG" 2>&1
+				$MY_INSTALLER $MY_INSTALL "$PACKAGE" | sudo tee -a "$INSTALL_LOG" 2>&1
 			else
 				$MY_INSTALLER $MY_INSTALL "$PACKAGE" >>"$INSTALL_LOG" 2>&1
 			fi
