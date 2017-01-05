@@ -15,9 +15,6 @@ assert_raises "false" 1
 # end of test suite
 assert_end examples
 
-# type server
-bash postinstall.sh -t server
-
 # sshd config
 assert "cat /etc/ssh/sshd_config | grep 'Port 222'" "Port 222"
 assert_end postinstall_sh
