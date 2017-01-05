@@ -86,8 +86,6 @@ Only `bash`, `curl` and a package manager for the respective operating system:
 ## TODO
 
 * More and better documentation
-* More tests
-	* `brew` is currently not tested
 * Support for even more operating systems (NetBSD, Gentoo Linux) and package managers
 
 Help is welcome 👍
