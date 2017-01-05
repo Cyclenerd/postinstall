@@ -8,5 +8,5 @@ before_script:
 script:
   - sudo echo "Travis $TRAVIS"
   - sudo echo "Travis OS $TRAVIS_OS_NAME"
-  - travis_wait 30 sudo bash postinstall.sh -t server
+  - sudo bash postinstall.sh -t server
   - bash tests.sh
