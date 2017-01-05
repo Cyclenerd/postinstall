@@ -5,6 +5,7 @@ os:
   - osx
 before_script:
   - curl -f "https://raw.githubusercontent.com/lehmannro/assert.sh/v1.1/assert.sh" -o assert.sh
+install: travis_wait 30 mvn install
 script:
   - sudo bash postinstall.sh -t server
   - bash tests.sh
