@@ -1,5 +1,7 @@
 # postinstall.sh
 
+[![Build Status](https://travis-ci.org/Cyclenerd/postinstall.svg?branch=master)](https://travis-ci.org/Cyclenerd/postinstall)
+
 Bash Script to automate post-installation steps.
 Helps to install packages on different operating systems.
 
