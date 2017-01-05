@@ -20,6 +20,11 @@ BASE="https://raw.githubusercontent.com/Cyclenerd/postinstall/master/base"
 # Type of installation
 TYPE="server"
 
+# Only for macOS and Homebrew
+#    Running Homebrew as root is extremely dangerous and no longer supported
+# Username for Homebrew
+MY_HOMEBREW_USER="nils"
+
 ################################################################################
 #### END Configuration Section
 ################################################################################
@@ -163,8 +168,6 @@ debug_variables() {
 	echo "AFTER_SCRIPT: $AFTER_SCRIPT"
 	echo "FETCHER: $FETCHER"
 	echo "ASSUME_ALWAYS_YES: $ASSUME_ALWAYS_YES"
-	echo "TRAVIS: $TRAVIS"
-	echo "TRAVIS_OS_NAME: $TRAVIS_OS_NAME"
 }
 
 # command_exists() tells if a given command exists.
@@ -207,6 +210,17 @@ function check_if_root_or_die() {
 		exit_with_failure "$ME should be run as root"
 	fi
 	echo_success
+}
+
+# check_travis() check travis (https://travis-ci.org/Cyclenerd/postinstall) environment
+function check_travis() {
+	if [ ! -z "$TRAVIS" ]; then
+		MY_HOMEBREW_USER="travis"
+		export MY_HOMEBREW_USER
+		echo "!!! Travis CI detected. Behavior is somewhat different !!!" >>"$INSTALL_LOG"
+		echo_step "Travis CI detected. Behavior is somewhat different!"
+		echo_success
+	fi
 }
 
 # check_bash() check if current shell is bash
@@ -480,7 +494,7 @@ function resync_installer() {
 			fi
 			;;
 		brew)
-			$MY_INSTALLER update >>"$INSTALL_LOG" 2>&1
+			sudo -u $MY_HOMEBREW_USER $MY_INSTALLER update | sudo tee -a "$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
 				exit_with_failure "Failed to do $MY_INSTALLER update"
 			fi
@@ -621,7 +635,7 @@ detect_hostname_fqdn
 detect_operating_system
 detect_architecture
 check_if_root_or_die
-
+check_travis
 
 echo_step "Preparing to Install"; echo
 
@@ -709,7 +723,11 @@ if [ -f "$PACKAGES_LIST" ]; then
 		if [[ "$PACKAGE" == [a-z]* ]] || [[ "$PACKAGE" == [A-Z]* ]]; then
 			echo_step "  $PACKAGE"
 			echo -e "\n$MY_INSTALLER $INSTALL $PACKAGE" >>"$INSTALL_LOG"
-			$MY_INSTALLER $MY_INSTALL "$PACKAGE" >>"$INSTALL_LOG" 2>&1
+			if [[ $MY_INSTALLER == "brew " ]]; then
+				sudo -u $MY_HOMEBREW_USER $MY_INSTALLER $MY_INSTALL "$PACKAGE" | sudo tee -a "$INSTALL_LOG" 2>&1
+			else
+				$MY_INSTALLER $MY_INSTALL "$PACKAGE" >>"$INSTALL_LOG" 2>&1
+			fi
 			if [ "$?" -ne 0 ]; then
 				echo_warning "Failed to install, will attempt to continue"
 			else

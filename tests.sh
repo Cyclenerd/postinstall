@@ -19,6 +19,12 @@ assert_end examples
 
 echo
 echo
+echo "SET:"
+echo
+set
+
+echo
+echo
 echo "INSTALL_LOG:"
 echo
 cat /tmp/install_*
