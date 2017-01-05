@@ -465,7 +465,7 @@ function resync_installer() {
 					exit_with_failure "Failed to do $MY_INSTALLER upgrade"
 				fi
 			else
-				echo "!!! Travis CI detected. No long upgrade is performed. !!!" >>"$INSTALL_LOG"
+				echo "!!! Travis CI detected. No long upgrade is performed !!!" >>"$INSTALL_LOG"
 			fi
 			;;
 		dnf|yum)

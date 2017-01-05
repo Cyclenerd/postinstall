@@ -94,13 +94,18 @@ else
 			;;
 	esac
 	
+	# Change password
 	if id -u "$MY_USERNAME" >> "$INSTALL_LOG" 2>&1; then
-		echo_step "  Change password"
-		echo
-		echo
-		echo -e "\n passwd $MY_USERNAME" >>"$INSTALL_LOG"
-		passwd "$MY_USERNAME"
-		echo
+		if [ -z "$TRAVIS" ]; then
+			echo_step "  Change password"
+			echo
+			echo
+			echo -e "\n passwd $MY_USERNAME" >>"$INSTALL_LOG"
+			passwd "$MY_USERNAME"
+			echo
+		else
+			echo "!!! Travis CI detected. No password change !!!" >>"$INSTALL_LOG"
+		fi
 	fi
 fi
 
