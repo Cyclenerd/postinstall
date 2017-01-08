@@ -659,10 +659,8 @@ while getopts ":b:t:h" opt; do
 	esac
 done
 
-if command_exists tput; then
-	echo "'tput' found. Let's start..!" >>"$INSTALL_LOG"
-else
-	"'tput' is needed. Please install 'tput' ('ncurses')."
+if ! command_exists tput; then
+	echo "'tput' is needed. Please install 'tput' ('ncurses')."
 	exit 9
 fi
 
