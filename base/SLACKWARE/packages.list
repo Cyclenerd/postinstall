@@ -1,0 +1,5 @@
+#
+# packages.list for SLACKWARE and all TYPEs
+#
+# One package per line
+ncurses

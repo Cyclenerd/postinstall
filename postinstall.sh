@@ -511,8 +511,8 @@ function resync_installer() {
 					echo "http://mirrors.slackware.com/slackware/slackware-current/" >> "/etc/slackpkg/mirrors"
 				fi
 			fi
-			$MY_INSTALLER update >>"$INSTALL_LOG" 2>&1
-			# upgrade not silent :-(
+			# update and upgrade not silent :-(
+			$MY_INSTALLER update
 			$MY_INSTALLER upgrade-all
 			if [ "$?" -ne 0 ]; then
 				exit_with_failure "Failed to do $MY_INSTALLER upgrade-all"
@@ -658,6 +658,13 @@ while getopts ":b:t:h" opt; do
 		;;
 	esac
 done
+
+if command_exists tput; then
+	echo "'tput' found. Let's start..!" >>"$INSTALL_LOG"
+else
+	"'tput' is needed. Please install 'tput' ('ncurses')."
+	exit 9
+fi
 
 echo
 echo
