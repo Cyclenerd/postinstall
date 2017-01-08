@@ -14,6 +14,7 @@ Helps to install packages on different operating systems.
 ![OpenBSD](https://www.nkn-it.de/img/distro/logos/openbsd.png)
 ![Red Hat](https://www.nkn-it.de/img/distro/logos/redhat.png)
 ![SUSE](https://www.nkn-it.de/img/distro/logos/opensuse.png)
+![Slackware](https://www.nkn-it.de/img/distro/logos/slackware.png)
 ![Ubuntu](https://www.nkn-it.de/img/distro/logos/ubuntu.png)
 
 ## Overview
@@ -80,6 +81,7 @@ Only `bash`, `curl` and a package manager for the respective operating system:
 * FreeBSD                   → `pkg`
 * OpenBSD                   → `pkg_add`
 * Red Hat / Fedora / CentOS → `dnf` or `yum`
+* Slackware                 → `slackpkg`
 * SUSE / openSUSE           → `zypper`
 
 

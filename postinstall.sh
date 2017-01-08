@@ -278,6 +278,10 @@ function detect_operating_system() {
 		echo -e "\ntest -f /etc/arch-release" >>"$INSTALL_LOG"
 		echo_step_info "Arch Linux"
 		OPERATING_SYSTEM="ARCH"
+	elif [ -f /etc/slackware-version ]; then
+		echo -e "\ntest -f /etc/slackware-version" >>"$INSTALL_LOG"
+		echo_step_info "Slackware"
+		OPERATING_SYSTEM="SLACKWARE"
 	elif [ -f /etc/redhat-release ] || [ -f /etc/system-release-cpe ]; then
 		echo -e "\ntest -f /etc/redhat-release || test -f /etc/system-release-cpe" >>"$INSTALL_LOG"
 		echo_step_info "Red Hat / CentOS"
@@ -371,6 +375,15 @@ function detect_installer() {
 				export MY_INSTALL="install -y"
 			else
 				exit_with_failure "Command 'zypper' not found"
+			fi
+			;;
+		SLACKWARE)
+			if command_exists slackpkg; then
+				echo -e "\nslackpkg found" >>"$INSTALL_LOG"
+				export MY_INSTALLER="slackpkg"
+				export MY_INSTALL="install"
+			else
+				exit_with_failure "Command 'slackpkg' not found"
 			fi
 			;;
 		FREEBSD)
@@ -481,6 +494,28 @@ function resync_installer() {
 			$MY_INSTALLER -Syu --noconfirm >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
 				exit_with_failure "Failed to do $MY_INSTALLER upgrade"
+			fi
+			;;
+		slackpkg)
+			SLACKPKG_MIRROR=$(tail -n 1 /etc/slackpkg/mirrors)
+			# Check mirror
+			if [ "$SLACKPKG_MIRROR" = "http://mirrors.slackware.com/slackware/slackware64-current/" ]; then
+				echo "found slackware64-current mirror" >> "$INSTALL_LOG"
+			elif [ "$SLACKPKG_MIRROR" = "http://mirrors.slackware.com/slackware/slackware-current/" ]; then
+				echo "found slackware-current mirror" >> "$INSTALL_LOG"
+			else
+				# add mirror
+				if [ "$ARCHITECTURE" = "x86_64" ]; then
+					echo "http://mirrors.slackware.com/slackware/slackware64-current/" >> "/etc/slackpkg/mirrors"
+				else
+					echo "http://mirrors.slackware.com/slackware/slackware-current/" >> "/etc/slackpkg/mirrors"
+				fi
+			fi
+			$MY_INSTALLER update >>"$INSTALL_LOG" 2>&1
+			# upgrade not silent :-(
+			$MY_INSTALLER upgrade-all
+			if [ "$?" -ne 0 ]; then
+				exit_with_failure "Failed to do $MY_INSTALLER upgrade-all"
 			fi
 			;;
 		pkg)
@@ -725,8 +760,11 @@ if [ -f "$PACKAGES_LIST" ]; then
 		if [[ "$PACKAGE" == [a-z]* ]] || [[ "$PACKAGE" == [A-Z]* ]]; then
 			echo_step "  $PACKAGE"
 			echo -e "\n$MY_INSTALLER $INSTALL $PACKAGE" >>"$INSTALL_LOG"
-			if [[ $MY_INSTALLER == "brew " ]]; then
+			if [[ $MY_INSTALLER == "brew" ]]; then
 				$MY_INSTALLER $MY_INSTALL "$PACKAGE" | sudo tee -a "$INSTALL_LOG" 2>&1
+			elif [[ $MY_INSTALLER == "slackpkg" ]]; then
+				# not silent
+				$MY_INSTALLER $MY_INSTALL "$PACKAGE"
 			else
 				$MY_INSTALLER $MY_INSTALL "$PACKAGE" >>"$INSTALL_LOG" 2>&1
 			fi
