@@ -65,7 +65,7 @@ if [ -d "/root" ]; then
 	cat >> "/root/.bashrc" << EOF
 
 # Set RED prompt
-PS1='\[\033[01;31m\]\u@\h \[\033[01;34m\]\W \# \[\033[00m\]'; export PS1
+PS1='\[\033[01;31m\]\u@\h \[\033[01;34m\]\W # \[\033[00m\]'; export PS1
 
 # Define nano as our default EDITOR
 export EDITOR='nano'
