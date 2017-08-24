@@ -600,8 +600,14 @@ function resync_installer() {
 
 # use the given INSTALL_LOG or set it to a random file in /tmp
 function set_install_log() {
-	if [[ ! $INSTALL_LOG ]]; then
-		export INSTALL_LOG="/tmp/install_$DATETIME.log"
+	if [[ ! $INSTALL_LOG ]]; then	
+		# Termux
+		if [ -d "$PREFIX/tmp" ]; then
+			export INSTALL_LOG="$PREFIX/tmp/install_$DATETIME.log"
+		# Normal
+		else
+			export INSTALL_LOG="/tmp/install_$DATETIME.log"
+		fi
 	fi
 	if [ -e "$INSTALL_LOG" ]; then
 		exit_with_failure "$INSTALL_LOG already exists"
@@ -611,7 +617,13 @@ function set_install_log() {
 # use the given PACKAGES_LIST or set it to a random file in /tmp
 function set_packages_list() {
 	if [[ ! $PACKAGES_LIST ]]; then
-		export PACKAGES_LIST="/tmp/packages_$DATETIME.list"
+		# Termux
+		if [ -d "$PREFIX/tmp" ]; then
+			export PACKAGES_LIST="$PREFIX/tmp/packages_$DATETIME.list"
+		# Normal
+		else
+			export PACKAGES_LIST="/tmp/packages_$DATETIME.list"
+		fi
 	fi
 	if [ -e "$PACKAGES_LIST" ]; then
 		exit_with_failure "$PACKAGES_LIST already exists"
@@ -621,7 +633,13 @@ function set_packages_list() {
 # use the given BEFORE_SCRIPT or set it to a random file in /tmp
 function set_before_script() {
 	if [[ ! $BEFORE_SCRIPT ]]; then
-		export BEFORE_SCRIPT="/tmp/before_$DATETIME.sh"
+		# Termux
+		if [ -d "$PREFIX/tmp" ]; then
+			export BEFORE_SCRIPT="$PREFIX/tmp/before_$DATETIME.sh"
+		# Normal
+		else
+			export BEFORE_SCRIPT="/tmp/before_$DATETIME.sh"
+		fi
 	fi
 	if [ -e "$BEFORE_SCRIPT" ]; then
 		exit_with_failure "$BEFORE_SCRIPT already exists"
@@ -631,7 +649,13 @@ function set_before_script() {
 # use the given AFTER_SCRIPT or set it to a random file in /tmp
 function set_after_script() {
 	if [[ ! $AFTER_SCRIPT ]]; then
-		export AFTER_SCRIPT="/tmp/after_$DATETIME.sh"
+		# Termux
+		if [ -d "$PREFIX/tmp" ]; then
+			export AFTER_SCRIPT="$PREFIX/tmp/after_$DATETIME.sh"
+		# Normal
+		else
+			export AFTER_SCRIPT="/tmp/after_$DATETIME.sh"
+		fi
 	fi
 	if [ -e "$AFTER_SCRIPT" ]; then
 		exit_with_failure "$AFTER_SCRIPT already exists"
