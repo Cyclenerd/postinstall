@@ -76,7 +76,7 @@ Example: `postinstall.sh` or `postinstall.sh -t workstation`
 
 ## Requirements
 
-Only `bash`, `curl` and a package manager for the respective operating system:
+Only `bash`, `curl`, `tput` (`ncurses-utils`) and a package manager for the respective operating system:
 
 * Apple macOS               → `port` or `brew`
 * Arch Linux                → `pacman`
