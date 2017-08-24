@@ -11,10 +11,16 @@
 export MY_USERNAME='nils'
 export MY_USERNAME_COMMENT='Nils K.'
 
-# Override the username when the script runs under Termux (Android)
+# Override the username when the script runs under...
+# Termux (Android)
 if [ "$OPERATING_SYSTEM" = "TERMUX" ]; then
 	MY_USERNAME=$(whoami)
 	echo -e "\nTermux username $MY_USERNAME" >>"$INSTALL_LOG"
+fi
+# Haiku
+if [ "$OPERATING_SYSTEM" = "HAIKU" ]; then
+	MY_USERNAME=$(whoami)
+	echo -e "\Haiku username $MY_USERNAME" >>"$INSTALL_LOG"
 fi
 
 # Check if user exists, if not create user and add to group wheel (for sudo)

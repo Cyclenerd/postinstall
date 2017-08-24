@@ -15,6 +15,7 @@ echo_step_info "~$MY_USERNAME/.ssh/id_rsa"
 {
 	echo -e "\n test dir /Users/$MY_USERNAME"
 	echo -e "\n test dir /data/data/com.termux/files/home"
+	echo -e "\n test dir /boot/home"
 	echo -e "\n test dir /home/$MY_USERNAME"
 	echo -e "\n test file ~$MY_USERNAME/.ssh/id_rsa"
 	echo -e "\n test dir ~$MY_USERNAME"
@@ -25,6 +26,9 @@ if [ -d "/Users/$MY_USERNAME" ]; then
 # Termux
 elif [ -d "/data/data/com.termux/files/home" ]; then
 	export HOMEDIR="/data/data/com.termux/files/home"
+# Haiku
+elif [ "$OPERATING_SYSTEM" = "HAIKU" ]; then
+	export HOMEDIR="/boot/home"
 # *nix
 else
 	export HOMEDIR="/home/$MY_USERNAME"
