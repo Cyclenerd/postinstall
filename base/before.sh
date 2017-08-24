@@ -7,8 +7,15 @@
 # User Configuration
 #
 
+# My default username
 export MY_USERNAME='nils'
 export MY_USERNAME_COMMENT='Nils K.'
+
+# Override the username when the script runs under Termux (Android)
+if [ "$OPERATING_SYSTEM" = "TERMUX" ]; then
+	MY_USERNAME=$(whoami)
+	echo -e "\nTermux username $MY_USERNAME" >>"$INSTALL_LOG"
+fi
 
 # Check if user exists, if not create user and add to group wheel (for sudo)
 if id -u "$MY_USERNAME" >> "$INSTALL_LOG" 2>&1; then
