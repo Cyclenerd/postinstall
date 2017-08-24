@@ -17,6 +17,8 @@ Helps to install packages on different operating systems.
 ![Slackware](https://www.nkn-it.de/img/distro/logos/slackware.png)
 ![Ubuntu](https://www.nkn-it.de/img/distro/logos/ubuntu.png)
 
+Cygwin and Haiku are also supported.
+
 ## Overview
 
 `postinstall.sh` is simple bash shell script which in turn generates scripts.

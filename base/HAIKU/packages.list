@@ -1,0 +1,6 @@
+#
+# packages.list for FREEBSD and all TYPEs
+#
+# One package per line
+nano
+bezilla

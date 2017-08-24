@@ -308,6 +308,10 @@ function detect_operating_system() {
 		echo -e "\ntest OPERATING_SYSTEM_TYPE" >>"$INSTALL_LOG"
 		echo_step_info "Cygwin"
 		OPERATING_SYSTEM="CYGWIN"
+	elif [ "$OPERATING_SYSTEM_TYPE" = "Haiku" ]; then
+		echo -e "\ntest OPERATING_SYSTEM_TYPE" >>"$INSTALL_LOG"
+		echo_step_info "Haiku"
+		OPERATING_SYSTEM="HAIKU"
 	else
 		{
 			echo -e "\ntest -f /etc/debian_version"
@@ -408,6 +412,16 @@ function detect_installer() {
 				export MY_INSTALL="-I"
 			else
 				exit_with_failure "Command 'pkg_add' not found"
+			fi
+			;;
+		HAIKU)
+			# https://www.haiku-os.org/guides/daily-tasks/updating-system/
+			if command_exists pkgman; then
+				echo -e "\npkgman found" >>"$INSTALL_LOG"
+				export MY_INSTALLER="pkgman"
+				export MY_INSTALL="install -y"
+			else
+				exit_with_failure "Command 'pkgman' not found"
 			fi
 			;;
 		CYGWIN)
@@ -522,6 +536,12 @@ function resync_installer() {
 			$MY_INSTALLER upgrade >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
 				exit_with_failure "Failed to do $MY_INSTALLER upgrade"
+			fi
+			;;
+		pkgman)
+			$MY_INSTALLER update >>"$INSTALL_LOG" 2>&1
+			if [ "$?" -ne 0 ]; then
+				exit_with_failure "Failed to do $MY_INSTALLER update"
 			fi
 			;;
 		apt-cyg)
