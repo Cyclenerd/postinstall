@@ -205,7 +205,10 @@ function check_if_root_or_die() {
 	SCRIPT_UID=$(id -u)
 	if [ "$OPERATING_SYSTEM" = "CYGWIN" ]; then
 		# Administrator really isn't equivalent to POSIX root.
-		echo_step_info "Under Cygwin, you do not have to be a root"
+		echo_step_info "Cygwin, no need for root"
+	elif [ "$OPERATING_SYSTEM" = "TERMUX" ]; then
+		# Termux does nor supply tools for rooting.
+		echo_step_info "Termux, no need for root"
 	elif [ "$SCRIPT_UID" != 0 ]; then
 		exit_with_failure "$ME should be run as root"
 	fi
