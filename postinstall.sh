@@ -312,6 +312,10 @@ function detect_operating_system() {
 		echo -e "\ntest OPERATING_SYSTEM_TYPE" >>"$INSTALL_LOG"
 		echo_step_info "Haiku"
 		OPERATING_SYSTEM="HAIKU"
+	elif [ -d /data/data/com.termux/files/home ]; then
+		echo -e "\ntest -d /data/data/com.termux/files/home" >>"$INSTALL_LOG"
+		echo_step_info "Termux"
+		OPERATING_SYSTEM="TERMUX"
 	else
 		{
 			echo -e "\ntest -f /etc/debian_version"
@@ -320,6 +324,7 @@ function detect_operating_system() {
 			echo -e "\ntest -f /etc/SUSE-brand || test -f /etc/SuSE-brand || test -f /etc/SuSE-release"
 			echo -e "\ntest -f /System/Library/CoreServices/SystemVersion.plist"
 			echo -e "\ntest OPERATING_SYSTEM_TYPE" 
+			echo -e "\ntest -d /data/data/com.termux/files/home" 
 		} >>"$INSTALL_LOG"
 		exit_with_failure "Unsupported operating system"
 	fi
@@ -422,6 +427,17 @@ function detect_installer() {
 				export MY_INSTALL="install -y"
 			else
 				exit_with_failure "Command 'pkgman' not found"
+			fi
+			;;
+		TERMUX)
+			# https://wiki.termux.com/wiki/Package_Management
+			# https://github.com/termux/termux-packages/blob/master/packages/termux-tools/pkg
+			if command_exists pkg; then
+				echo -e "\npkg found" >>"$INSTALL_LOG"
+				export MY_INSTALLER="pkg"
+				export MY_INSTALL="install -y"
+			else
+				exit_with_failure "Command 'pkg' not found"
 			fi
 			;;
 		CYGWIN)

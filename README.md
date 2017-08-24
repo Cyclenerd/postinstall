@@ -16,6 +16,8 @@ Helps to install packages on different operating systems.
 ![SUSE](https://www.nkn-it.de/img/distro/logos/opensuse.png)
 ![Slackware](https://www.nkn-it.de/img/distro/logos/slackware.png)
 ![Ubuntu](https://www.nkn-it.de/img/distro/logos/ubuntu.png)
+![Android](https://www.nkn-it.de/img/distro/logos/android.png)
+![Termux](https://www.nkn-it.de/img/distro/logos/termux.png)
 
 Cygwin and Haiku are also supported.
 
@@ -81,10 +83,12 @@ Only `bash`, `curl` and a package manager for the respective operating system:
 * Cygwin                    → `apt-cyg`
 * Debian / Ubuntu           → `apt-get`
 * FreeBSD                   → `pkg`
+* Haiku                     → `pkgman`
 * OpenBSD                   → `pkg_add`
 * Red Hat / Fedora / CentOS → `dnf` or `yum`
 * Slackware                 → `slackpkg`
 * SUSE / openSUSE           → `zypper`
+* Termux                    → `pkg`
 
 
 ## TODO
