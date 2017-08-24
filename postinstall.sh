@@ -209,6 +209,9 @@ function check_if_root_or_die() {
 	elif [ "$OPERATING_SYSTEM" = "TERMUX" ]; then
 		# Termux does nor supply tools for rooting.
 		echo_step_info "Termux, no need for root"
+	elif [ "$OPERATING_SYSTEM" = "HAIKU" ]; then
+		# Haiku is a single-user system
+		echo_step_info "Haiku, no need for root"
 	elif [ "$SCRIPT_UID" != 0 ]; then
 		exit_with_failure "$ME should be run as root"
 	fi
