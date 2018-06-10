@@ -52,11 +52,18 @@ if [ -f "$SSHD_CONF_FILE" ]; then
 	
 	cp "$SSHD_CONF_FILE" "$SSHD_CONF_FILE.$OPERATING_SYSTEM"
 	
-	echo_step "    Port 222"
+	# Reconfigure SSH Daemon Port
+	echo_step "    Port $SSHD_CONF_PORT"
 	if grep -q ^#Port "$SSHD_CONF_FILE"; then
+		# Remove comment (#) and change port
 		perl -i -pe "s,^#Port.*,Port $SSHD_CONF_PORT,g" "$SSHD_CONF_FILE"
-	else
+	fi
+	if grep -q ^Port "$SSHD_CONF_FILE"; then
+		# Change port
 		perl -i -pe "s,^Port.*,Port $SSHD_CONF_PORT,g" "$SSHD_CONF_FILE"
+	else
+		# Add port
+		echo "Port $SSHD_CONF_PORT" >> "$SSHD_CONF_FILE"
 	fi
 	if [ "$?" -ne 0 ]; then
 		echo_warning "Failed, will attempt to continue"
