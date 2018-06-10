@@ -33,5 +33,11 @@ echo
 echo
 
 # sshd config
+echo
+echo
+echo "SSH CONFIG:"
+echo
+cat /etc/ssh/sshd_config
+
 assert "cat /etc/ssh/sshd_config | grep 'Port 222'" "Port 222"
 assert_end postinstall_sh
