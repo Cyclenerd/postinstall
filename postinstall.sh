@@ -12,12 +12,14 @@
 #### Configuration Section
 ################################################################################
 
-# Where is the base url or dir. Without / at the end
+# Where is the default base url or dir. Without / at the end
 # Filesystem directory: BASE="/Users/nils/Scripts/postinstall/base"
 # Web: BASE="https://raw.githubusercontent.com/Cyclenerd/postinstall/master/base"
+# Can be overwritten with -b <BASE> at runtime
 BASE="https://raw.githubusercontent.com/Cyclenerd/postinstall/master/base"
 
-# Type of installation
+# Default type of installation
+# Can be overwritten with -t <TYPE> at runtime
 TYPE="server"
 
 ################################################################################
@@ -290,7 +292,7 @@ function detect_operating_system() {
 		OPERATING_SYSTEM="SLACKWARE"
 	elif [ -f /etc/redhat-release ] || [ -f /etc/system-release-cpe ]; then
 		echo -e "\ntest -f /etc/redhat-release || test -f /etc/system-release-cpe" >>"$INSTALL_LOG"
-		echo_step_info "Red Hat / CentOS"
+		echo_step_info "Red Hat / Fedora / CentOS"
 		OPERATING_SYSTEM="REDHAT"
 	elif [ -f /etc/SUSE-brand ] || [ -f /etc/SuSE-brand ] || [ -f /etc/SuSE-release ] || [ -d /etc/susehelp.d ]; then
 		echo -e "\ntest -f /etc/SUSE-brand || test -f /etc/SuSE-brand || test -f /etc/SuSE-release || test -d /etc/susehelp.d" >>"$INSTALL_LOG"
