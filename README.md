@@ -18,6 +18,7 @@ Helps to install packages on different operating systems.
 ![Ubuntu](https://www.nkn-it.de/img/distro/logos/ubuntu.png)
 ![Android](https://www.nkn-it.de/img/distro/logos/android.png)
 ![Termux](https://www.nkn-it.de/img/distro/logos/termux.png)
+![Alpine Linux](https://www.nkn-it.de/img/distro/logos/alpine.png)
 
 Cygwin and Haiku are also supported.
 
@@ -78,6 +79,7 @@ Example: `postinstall.sh` or `postinstall.sh -t workstation`
 
 Only `bash`, `curl`, `tput` (`ncurses-utils`) and a package manager for the respective operating system:
 
+* Alpine Linux              → `apk`
 * Apple macOS               → `port` or `brew`
 * Arch Linux                → `pacman`
 * Cygwin                    → `apt-cyg`
