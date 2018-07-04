@@ -322,6 +322,10 @@ function detect_operating_system() {
 		echo -e "\ntest -d /data/data/com.termux/files/home" >>"$INSTALL_LOG"
 		echo_step_info "Termux"
 		OPERATING_SYSTEM="TERMUX"
+	elif [ -f /etc/alpine-release ]; then
+		echo -e "\ntest -f /etc/alpine-release " >>"$INSTALL_LOG"
+		echo_step_info "Alpine Linux"
+		OPERATING_SYSTEM="ALPINE"
 	else
 		{
 			echo -e "\ntest -f /etc/debian_version"
@@ -444,6 +448,16 @@ function detect_installer() {
 				export MY_INSTALL="install -y"
 			else
 				exit_with_failure "Command 'pkg' not found"
+			fi
+			;;
+		ALPINE)
+			# https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management
+			if command_exists apk; then
+				echo -e "\apk found" >>"$INSTALL_LOG"
+				export MY_INSTALLER="apk"
+				export MY_INSTALL="add"
+			else
+				exit_with_failure "Command 'apk' not found"
 			fi
 			;;
 		CYGWIN)
@@ -598,6 +612,16 @@ function resync_installer() {
 			$MY_INSTALLER -UuI >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
 				exit_with_failure "Failed to do $MY_INSTALLER update"
+			fi
+			;;
+		apk)
+			$MY_INSTALLER update >>"$INSTALL_LOG" 2>&1
+			if [ "$?" -ne 0 ]; then
+				exit_with_failure "Failed to do $MY_INSTALLER update"
+			fi
+			$MY_INSTALLER upgrade >>"$INSTALL_LOG" 2>&1
+			if [ "$?" -ne 0 ]; then
+				exit_with_failure "Failed to do $MY_INSTALLER upgrade"
 			fi
 			;;
 	esac
