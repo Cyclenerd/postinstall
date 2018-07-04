@@ -15,7 +15,7 @@ fi
 # Add negativo17.org for spotify-client
 echo_step "  Installing negativo17.org repositories for Spotify"
 
-dnf config-manager --add-repo="http://negativo17.org/repos/fedora-spotify.repo" >>"$INSTALL_LOG" 2>&1
+dnf config-manager --add-repo="https://negativo17.org/repos/fedora-spotify.repo" >>"$INSTALL_LOG" 2>&1
 if [ "$?" -ne 0 ]; then
 	echo_warning "Failed to install repositories, will attempt to continue"
 else
