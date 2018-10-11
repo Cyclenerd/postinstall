@@ -1,0 +1,7 @@
+#
+# packages.list for DEBIAN and TYPE=server
+#
+# One package per line
+munin-node
+munin-plugins-extra
+mutt
