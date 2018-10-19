@@ -18,7 +18,6 @@ action    = %(action_mwl)s
 [sshd]
 enabled   = true
 port      = ssh,222
-echo_success
 
 EOL
 echo_success
