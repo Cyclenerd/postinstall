@@ -312,6 +312,10 @@ function detect_operating_system() {
 		echo -e "\ntest OPERATING_SYSTEM_TYPE" >>"$INSTALL_LOG"
 		echo_step_info "OpenBSD"
 		OPERATING_SYSTEM="OPENBSD"
+	elif [ "$OPERATING_SYSTEM_TYPE" = "OpenWRT" ]; then
+		echo -e "\ntest OPERATING_SYSTEM_TYPE" >>"$INSTALL_LOG"
+		echo_step_info "OpenWRT"
+		OPERATING_SYSTEM="OPENWRT"
 	elif [ "$OPERATING_SYSTEM_TYPE" = "Cygwin" ]; then
 		echo -e "\ntest OPERATING_SYSTEM_TYPE" >>"$INSTALL_LOG"
 		echo_step_info "Cygwin"
@@ -429,6 +433,16 @@ function detect_installer() {
 				export MY_INSTALL="-I"
 			else
 				exit_with_failure "Command 'pkg_add' not found"
+			fi
+			;;
+		OPENWRT)
+			# https://wiki.openwrt.org/doc/packages
+			if command_exists opkg; then
+				echo -e "\nopkg found" >>"$INSTALL_LOG"
+				export MY_INSTALLER="opkg"
+				export MY_INSTALL="install"
+			else
+				exit_with_failure "Command 'opkg' not found"
 			fi
 			;;
 		HAIKU)
