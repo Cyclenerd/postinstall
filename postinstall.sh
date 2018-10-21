@@ -312,6 +312,10 @@ function detect_operating_system() {
 		echo -e "\ntest OPERATING_SYSTEM_TYPE" >>"$INSTALL_LOG"
 		echo_step_info "OpenBSD"
 		OPERATING_SYSTEM="OPENBSD"
+	elif [ "$OPERATING_SYSTEM_TYPE" = "NetBSD" ]; then
+		echo -e "\ntest OPERATING_SYSTEM_TYPE" >>"$INSTALL_LOG"
+		echo_step_info "NetBSD"
+		OPERATING_SYSTEM="NETBSD"
 	elif [ "$OPERATING_SYSTEM_TYPE" = "OpenWRT" ]; then
 		echo -e "\ntest OPERATING_SYSTEM_TYPE" >>"$INSTALL_LOG"
 		echo_step_info "OpenWRT"
@@ -427,6 +431,16 @@ function detect_installer() {
 			;;
 		OPENBSD)
 			# http://man.openbsd.org/pkg_add
+			if command_exists pkg_add; then
+				echo -e "\npkg_add found" >>"$INSTALL_LOG"
+				export MY_INSTALLER="pkg_add"
+				export MY_INSTALL="-I"
+			else
+				exit_with_failure "Command 'pkg_add' not found"
+			fi
+			;;
+		NETBSD)
+			# https://www.netbsd.org/docs/pkgsrc/using.html#installing-binary-packages
 			if command_exists pkg_add; then
 				echo -e "\npkg_add found" >>"$INSTALL_LOG"
 				export MY_INSTALLER="pkg_add"
