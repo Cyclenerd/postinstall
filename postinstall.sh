@@ -222,7 +222,7 @@ function check_if_root_or_die() {
 
 # check_travis() check travis (https://travis-ci.org/Cyclenerd/postinstall) environment
 function check_travis() {
-	if [ ! -z "$TRAVIS" ]; then
+	if [ -n "$TRAVIS" ]; then
 		MY_HOMEBREW_USER="travis"
 		export MY_HOMEBREW_USER
 		echo "!!! Travis CI detected. Behavior is somewhat different !!!" >>"$INSTALL_LOG"
