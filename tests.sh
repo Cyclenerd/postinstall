@@ -32,12 +32,13 @@ cat /tmp/install_*
 echo
 echo
 
-# sshd config
-echo
-echo
-echo "SSH CONFIG:"
-echo
-cat /etc/ssh/sshd_config
 
-assert "cat /etc/ssh/sshd_config | grep 'Port 222'" "Port 222"
+echo
+echo
+echo "DONE:"
+echo
+cat /tmp/done
+echo
+
+assert "cat /tmp/done" "done"
 assert_end postinstall_sh
