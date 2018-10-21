@@ -308,6 +308,10 @@ function detect_operating_system() {
 		OPERATING_SYSTEM="FREEBSD"
 		# FreeBSD pkg automatically assume "yes"
 		export ASSUME_ALWAYS_YES="yes"
+	elif [ "$OPERATING_SYSTEM_TYPE" = "NetBSD" ]; then
+		echo -e "\ntest OPERATING_SYSTEM_TYPE" >>"$INSTALL_LOG"
+		echo_step_info "NetBSD"
+		OPERATING_SYSTEM="NETBSD"
 	elif [ "$OPERATING_SYSTEM_TYPE" = "OpenBSD" ]; then
 		echo -e "\ntest OPERATING_SYSTEM_TYPE" >>"$INSTALL_LOG"
 		echo_step_info "OpenBSD"
@@ -419,6 +423,16 @@ function detect_installer() {
 				export MY_INSTALL="install"
 			else
 				exit_with_failure "Command 'pkg' not found"
+			fi
+			;;
+		NETBSD)
+			# https://www.netbsd.org/docs/pkgsrc/using.html#installing-binary-packages
+			if command_exists pkg_add; then
+				echo -e "\npkg_add found" >>"$INSTALL_LOG"
+				export MY_INSTALLER="pkg_add"
+				export MY_INSTALL="-I"
+			else
+				exit_with_failure "Command 'pkg_add' not found"
 			fi
 			;;
 		OPENBSD)
