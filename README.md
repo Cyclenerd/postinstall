@@ -86,7 +86,9 @@ Only `bash`, `curl`, `tput` (`ncurses-utils`) and a package manager for the resp
 * Debian / Ubuntu           → `apt-get`
 * FreeBSD                   → `pkg`
 * Haiku                     → `pkgman`
+* NetBSD                    → `pkg_add`
 * OpenBSD                   → `pkg_add`
+* OpenWRT                   → `opkg`
 * Red Hat / Fedora / CentOS → `dnf` or `yum`
 * Slackware                 → `slackpkg`
 * SUSE / openSUSE           → `zypper`
@@ -96,7 +98,7 @@ Only `bash`, `curl`, `tput` (`ncurses-utils`) and a package manager for the resp
 ## TODO
 
 * More and better documentation
-* Support for even more operating systems (NetBSD, Gentoo Linux) and package managers
+* Support for even more operating systems and package managers
 
 Help is welcome 👍
 
