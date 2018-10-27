@@ -336,7 +336,7 @@ function detect_operating_system() {
 		echo -e "\ntest -f /etc/alpine-release " >>"$INSTALL_LOG"
 		echo_step_info "Alpine Linux"
 		OPERATING_SYSTEM="ALPINE"
-	elif [ -f /etc/release ]; then
+	elif grep -lq ^Mageia$ /etc/release; then
 	    	echo -e "\ntest -f /etc/release " >>"$INSTALL_LOG"
 	    	echo_step_info "Mageia"
 		OPERATING_SYSTEM="MAGEIA"
