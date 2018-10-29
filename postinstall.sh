@@ -336,6 +336,10 @@ function detect_operating_system() {
 		echo -e "\ntest -f /etc/alpine-release " >>"$INSTALL_LOG"
 		echo_step_info "Alpine Linux"
 		OPERATING_SYSTEM="ALPINE"
+	elif grep -lqs ^Mageia$ /etc/release; then
+	    	echo -e "\ntest -f /etc/release " >>"$INSTALL_LOG"
+	    	echo_step_info "Mageia"
+		OPERATING_SYSTEM="MAGEIA"
 	else
 		{
 			echo -e "\ntest -f /etc/debian_version"
@@ -344,7 +348,8 @@ function detect_operating_system() {
 			echo -e "\ntest -f /etc/SUSE-brand || test -f /etc/SuSE-brand || test -f /etc/SuSE-release"
 			echo -e "\ntest -f /System/Library/CoreServices/SystemVersion.plist"
 			echo -e "\ntest OPERATING_SYSTEM_TYPE" 
-			echo -e "\ntest -d /data/data/com.termux/files/home" 
+			echo -e "\ntest -d /data/data/com.termux/files/home"
+
 		} >>"$INSTALL_LOG"
 		exit_with_failure "Unsupported operating system"
 	fi
@@ -536,6 +541,16 @@ function detect_installer() {
 				exit_with_failure "XCode not found. Install the latest XCode from the AppStore."
 			fi
 			;;
+		MAGEIA)
+		    	# https://wiki.mageia.org/en/Installing_and_removing_software
+		    	if command_exists urpmi; then
+				echo -e "\nurpmi found" >>"$INSTALL_LOG"
+				export MY_INSTALLER="urpmi"
+				export MY_INSTALL="--force"
+		    	else
+				exit_with_failure "Command 'urpmi' not found"
+		    	fi
+			;;
 	esac
 	echo_success
 }
@@ -650,6 +665,12 @@ function resync_installer() {
 				exit_with_failure "Failed to do $MY_INSTALLER update"
 			fi
 			$MY_INSTALLER upgrade >>"$INSTALL_LOG" 2>&1
+			if [ "$?" -ne 0 ]; then
+				exit_with_failure "Failed to do $MY_INSTALLER upgrade"
+			fi
+			;;
+		urpmi)
+			$MY_INSTALLER --auto-update --force >>"$INSTALL_LOG" 2>&1
 			if [ "$?" -ne 0 ]; then
 				exit_with_failure "Failed to do $MY_INSTALLER upgrade"
 			fi
