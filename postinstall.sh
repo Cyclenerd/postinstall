@@ -542,14 +542,14 @@ function detect_installer() {
 			fi
 			;;
 		MAGEIA)
-		    	# https://wiki.mageia.org/en/Installing_and_removing_software
-		    	if command_exists urpmi; then
+			# https://wiki.mageia.org/en/Installing_and_removing_software
+			if command_exists urpmi; then
 				echo -e "\nurpmi found" >>"$INSTALL_LOG"
 				export MY_INSTALLER="urpmi"
 				export MY_INSTALL="--force"
-		    	else
+			else
 				exit_with_failure "Command 'urpmi' not found"
-		    	fi
+			fi
 			;;
 	esac
 	echo_success
