@@ -11,6 +11,7 @@ Helps to install packages on different operating systems.
 ![Debian](https://www.nkn-it.de/img/distro/logos/debian.png)
 ![Fedora](https://www.nkn-it.de/img/distro/logos/fedora.png)
 ![FreeBSD](https://www.nkn-it.de/img/distro/logos/freebsd.png)
+![Mageia](https://www.nkn-it.de/img/distro/logos/mageia.png)
 ![OpenBSD](https://www.nkn-it.de/img/distro/logos/openbsd.png)
 ![Red Hat](https://www.nkn-it.de/img/distro/logos/redhat.png)
 ![SUSE](https://www.nkn-it.de/img/distro/logos/opensuse.png)
@@ -86,6 +87,7 @@ Only `bash`, `curl`, `tput` (`ncurses-utils`) and a package manager for the resp
 * Debian / Ubuntu           → `apt-get`
 * FreeBSD                   → `pkg`
 * Haiku                     → `pkgman`
+* Mageia                    → `urpmi`
 * NetBSD                    → `pkg_add`
 * OpenBSD                   → `pkg_add`
 * OpenWRT                   → `opkg`
