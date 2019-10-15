@@ -337,9 +337,13 @@ function detect_operating_system() {
 		echo_step_info "Alpine Linux"
 		OPERATING_SYSTEM="ALPINE"
 	elif grep -lqs ^Mageia$ /etc/release; then
-	    	echo -e "\ntest -f /etc/release " >>"$INSTALL_LOG"
-	    	echo_step_info "Mageia"
+		echo -e "\ntest -f /etc/release " >>"$INSTALL_LOG"
+		echo_step_info "Mageia"
 		OPERATING_SYSTEM="MAGEIA"
+	elif grep -lqs Puppy /etc/os-release; then
+		echo -e "\ntest -f /etc/os-release " >>"$INSTALL_LOG"
+		echo_step_info "Puppy"
+		OPERATING_SYSTEM="PUPPY"
 	else
 		{
 			echo -e "\ntest -f /etc/debian_version"
@@ -551,6 +555,16 @@ function detect_installer() {
 				exit_with_failure "Command 'urpmi' not found"
 			fi
 			;;
+		PUPPY)
+			# https://gitlab.com/sc0ttj/Pkg
+			if command_exists pkg; then
+				echo -e "\npkg found" >>"$INSTALL_LOG"
+				export MY_INSTALLER="pkg"
+				export MY_INSTALL="-f add"
+			else
+				exit_with_failure "Command 'pkg' not found"
+			fi
+			;;
 	esac
 	echo_success
 }
@@ -614,9 +628,16 @@ function resync_installer() {
 			fi
 			;;
 		pkg)
-			$MY_INSTALLER upgrade >>"$INSTALL_LOG" 2>&1
-			if [ "$?" -ne 0 ]; then
-				exit_with_failure "Failed to do $MY_INSTALLER upgrade"
+			if [ "$OPERATING_SYSTEM" = "PUPPY" ]; then
+				$MY_INSTALLER update-sources >>"$INSTALL_LOG" 2>&1
+				if [ "$?" -ne 0 ]; then
+					exit_with_failure "Failed to do $MY_INSTALLER repo-update"
+				fi
+			else
+				$MY_INSTALLER upgrade >>"$INSTALL_LOG" 2>&1
+				if [ "$?" -ne 0 ]; then
+					exit_with_failure "Failed to do $MY_INSTALLER upgrade"
+				fi
 			fi
 			;;
 		pkgman)
