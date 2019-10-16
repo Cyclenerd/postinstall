@@ -1,5 +1,5 @@
 #
-# before.sh for DEBIAN and TYPE=workstation
+# before.sh for PUPPY and ALL types
 #
 
 # Add user's .ssh directory
