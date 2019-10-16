@@ -21,7 +21,7 @@ Helps to install packages on different operating systems.
 ![Termux](https://www.nkn-it.de/img/distro/logos/termux.png)
 ![Alpine Linux](https://www.nkn-it.de/img/distro/logos/alpine.png)
 
-Cygwin and Haiku are also supported.
+Puppy, Cygwin and Haiku are also supported.
 
 ## Overview
 
@@ -91,6 +91,7 @@ Only `bash`, `curl`, `tput` (`ncurses-utils`) and a package manager for the resp
 * NetBSD                    → `pkg_add`
 * OpenBSD                   → `pkg_add`
 * OpenWRT                   → `opkg`
+* Puppy                     → `pkg` (https://gitlab.com/sc0ttj/Pkg)
 * Red Hat / Fedora / CentOS → `dnf` or `yum`
 * Slackware                 → `slackpkg`
 * SUSE / openSUSE           → `zypper`
