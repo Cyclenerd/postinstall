@@ -5,21 +5,21 @@
 Bash Script to automate post-installation steps.
 Helps to install packages on different operating systems.
 
-![Apple macOS](https://www.nkn-it.de/img/distro/logos/apple-osx.png)
-![Arch Linux](https://www.nkn-it.de/img/distro/logos/arch.png)
-![CentOS](https://www.nkn-it.de/img/distro/logos/centos.png)
-![Debian](https://www.nkn-it.de/img/distro/logos/debian.png)
-![Fedora](https://www.nkn-it.de/img/distro/logos/fedora.png)
-![FreeBSD](https://www.nkn-it.de/img/distro/logos/freebsd.png)
-![Mageia](https://www.nkn-it.de/img/distro/logos/mageia.png)
-![OpenBSD](https://www.nkn-it.de/img/distro/logos/openbsd.png)
-![Red Hat](https://www.nkn-it.de/img/distro/logos/redhat.png)
-![SUSE](https://www.nkn-it.de/img/distro/logos/opensuse.png)
-![Slackware](https://www.nkn-it.de/img/distro/logos/slackware.png)
-![Ubuntu](https://www.nkn-it.de/img/distro/logos/ubuntu.png)
-![Android](https://www.nkn-it.de/img/distro/logos/android.png)
-![Termux](https://www.nkn-it.de/img/distro/logos/termux.png)
-![Alpine Linux](https://www.nkn-it.de/img/distro/logos/alpine.png)
+![Apple macOS](img/apple-osx.png)
+![Arch Linux](img/arch.png)
+![CentOS](img/centos.png)
+![Debian](img/debian.png)
+![Fedora](img/fedora.png)
+![FreeBSD](img/freebsd.png)
+![Mageia](img/mageia.png)
+![OpenBSD](img/openbsd.png)
+![Red Hat](img/redhat.png)
+![SUSE](img/opensuse.png)
+![Slackware](img/slackware.png)
+![Ubuntu](img/ubuntu.png)
+![Android](img/android.png)
+![Termux](img/termux.png)
+![Alpine Linux](img/alpine.png)
 
 Cygwin and Haiku are also supported.
 
