@@ -16,7 +16,7 @@
 # Filesystem directory: BASE="/Users/nils/Scripts/postinstall/base"
 # Web: BASE="https://raw.githubusercontent.com/Cyclenerd/postinstall/master/base"
 # Can be overwritten with -b <BASE> at runtime
-BASE="https://raw.githubusercontent.com/Cyclenerd/postinstall/master/base"
+BASE="https://raw.githubusercontent.com/kompowiec/postinstall/master/base"
 
 # Default type of installation
 # Can be overwritten with -t <TYPE> at runtime
