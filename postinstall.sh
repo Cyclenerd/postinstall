@@ -416,6 +416,7 @@ function detect_installer() {
 			fi
 			;;
 		SLACKWARE)
+			sed -i '17,25 s/^#//' /etc/slackpkg/blacklist
 			if command_exists slackpkg; then
 				echo -e "\nslackpkg found" >>"$INSTALL_LOG"
 				export MY_INSTALLER="slackpkg"
