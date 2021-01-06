@@ -2,7 +2,6 @@ language: bash
 sudo: required
 os:
   - linux
-  - osx
 before_script:
   - curl -f "https://raw.githubusercontent.com/lehmannro/assert.sh/v1.1/assert.sh" -o assert.sh
 script:
