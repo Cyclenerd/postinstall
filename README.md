@@ -42,30 +42,47 @@ __Please check the [Wiki](https://github.com/Cyclenerd/postinstall/wiki/postinst
 
 Download:
 
-	curl -f https://raw.githubusercontent.com/Cyclenerd/postinstall/master/postinstall.sh -o postinstall.sh
+```
+curl -f https://raw.githubusercontent.com/Cyclenerd/postinstall/master/postinstall.sh -o postinstall.sh
+```
 
 Alternative download with short URL:
 
-	curl -fL http://bit.ly/get_postinstall -o postinstall.sh
+```
+curl -fL http://bit.ly/get_postinstall -o postinstall.sh
+```
+
+Create a package lists and scripts as explained in this [repository](https://github.com/Cyclenerd/postinstall/tree/master/base) or in the [Wiki](https://github.com/Cyclenerd/postinstall/wiki/postinstall.sh).
+
+Example:
+
+```
+mkdir install
+cd install
+vi packages.list
+```
 
 Run as root:
 
-	bash postinstall.sh
-
+```
+bash postinstall.sh -b install
+```
 
 ## Usage
 
-	Usage: postinstall [-t <TYPE>] [-b <BASE>] [-h]:
-		[-t <TYPE>] sets the type of installation
-		[-b <BASE>] sets the base url or dir
-		[-h]        displays help
+```
+Usage: postinstall.sh [-t <TYPE>] [-b <BASE>] [-h]:
+        [-t <TYPE>]      sets the type of installation (default: server)
+        [-b <BASE>]      sets the base url or dir (default: https://raw.githubusercontent.com/Cyclenerd/postinstall/master/base)
+        [-h]             displays help (this message)
+```
 
 Example: `postinstall.sh` or `postinstall.sh -t workstation`
 
 
 ## Screenshot
 
-![Fedora](http://i.imgur.com/cMm0GIe.gif)
+![WSL](img/WSL_Screenshot.jpg)
 
 
 ## Program Flow
