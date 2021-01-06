@@ -4,8 +4,8 @@
 # Author: Nils Knieling - https://github.com/Cyclenerd/postinstall
 # Inspired by: Wavefront - https://github.com/wavefrontHQ/install
 
-# Bash Script to automate post-installation steps. Helps to 
-#  install packages 
+# Bash Script to automate post-installation steps. Helps to
+#  install packages
 #  on different operating systems.
 
 ################################################################################
@@ -854,7 +854,7 @@ resync_installer
 check_fetcher
 
 
-echo_step "Creating scripts"; echo
+echo_step "Creating scripts from base '$BASE'"; echo
 
 # Set script sources
 PACKAGE_SOURCES=(
