@@ -620,11 +620,10 @@ function resync_installer() {
 					echo "http://mirrors.slackware.com/slackware/slackware-current/" >> "/etc/slackpkg/mirrors"
 				fi
 			fi
-			# update and upgrade not silent :-(
+			# update not silent :-(
 			$MY_INSTALLER update
-			$MY_INSTALLER upgrade-all
 			if [ "$?" -ne 0 ]; then
-				exit_with_failure "Failed to do $MY_INSTALLER upgrade-all"
+				exit_with_failure "Failed to do $MY_INSTALLER update"
 			fi
 			;;
 		pkg)
