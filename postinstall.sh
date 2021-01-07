@@ -416,7 +416,6 @@ function detect_installer() {
 			fi
 			;;
 		SLACKWARE)
-			sed -i '17,25 s/^#//' /etc/slackpkg/blacklist
 			if command_exists slackpkg; then
 				echo -e "\nslackpkg found" >>"$INSTALL_LOG"
 				export MY_INSTALLER="slackpkg"
@@ -622,6 +621,7 @@ function resync_installer() {
 				fi
 			fi
 			# update and upgrade not silent :-(
+			$MY_INSTALLER blacklist kernel-firmware kernel-generic kernel-generic-smp kernel-headers kernel-huge kernel-huge-smp kernel-modules kernel-modules-smp kernel-source
 			$MY_INSTALLER update
 			$MY_INSTALLER upgrade-all
 			if [ "$?" -ne 0 ]; then
