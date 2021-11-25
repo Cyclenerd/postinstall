@@ -1,5 +1,6 @@
 # postinstall.sh
 
+[![ShellCheck](https://github.com/Cyclenerd/postinstall/actions/workflows/shellcheck.yml/badge.svg?branch=master)](https://github.com/Cyclenerd/postinstall/actions/workflows/shellcheck.yml)
 [![Ubuntu 20.04 LTS](https://github.com/Cyclenerd/postinstall/actions/workflows/ubuntu_2004.yml/badge.svg?branch=master)](https://github.com/Cyclenerd/postinstall/actions/workflows/ubuntu_2004.yml)
 
 Bash Script to automate post-installation steps.
