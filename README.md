@@ -1,5 +1,7 @@
 # postinstall.sh
 
+[![Ubuntu 20.04 LTS](https://github.com/Cyclenerd/postinstall/actions/workflows/ubuntu_2004.yml/badge.svg?branch=master)](https://github.com/Cyclenerd/postinstall/actions/workflows/ubuntu_2004.yml)
+
 Bash Script to automate post-installation steps.
 Helps to install packages on different operating systems.
 
