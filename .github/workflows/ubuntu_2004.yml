@@ -23,5 +23,7 @@ jobs:
         run: sudo -E bash postinstall.sh
 
       # Run tests
-      - name: Log 🛠️
+      - name: Log 📜
         run: cat /tmp/install_*
+      - name: Test 🛠️
+        run: grep "CI detected" < /tmp/install_*
