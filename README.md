@@ -43,13 +43,13 @@ __Please check the [Wiki](https://github.com/Cyclenerd/postinstall/wiki/postinst
 
 Download:
 
-```
-curl -f https://raw.githubusercontent.com/Cyclenerd/postinstall/master/postinstall.sh -o postinstall.sh
+```shell
+curl -O "https://raw.githubusercontent.com/Cyclenerd/postinstall/master/postinstall.sh"
 ```
 
 Alternative download with short URL:
 
-```
+```shell
 curl -fL http://bit.ly/get_postinstall -o postinstall.sh
 ```
 
@@ -57,7 +57,7 @@ Create a package lists and scripts as explained in this [repository](https://git
 
 Example:
 
-```
+```shell
 mkdir install
 cd install
 vi packages.list
@@ -65,13 +65,13 @@ vi packages.list
 
 Run as root:
 
-```
+```shell
 bash postinstall.sh -b install
 ```
 
 ## Usage
 
-```
+```txt
 Usage: postinstall.sh [-t <TYPE>] [-b <BASE>] [-h]:
         [-t <TYPE>]      sets the type of installation (default: server)
         [-b <BASE>]      sets the base url or dir (default: https://raw.githubusercontent.com/Cyclenerd/postinstall/master/base)
