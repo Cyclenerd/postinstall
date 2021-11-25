@@ -1,9 +1,0 @@
-language: bash
-sudo: required
-os:
-  - linux
-before_script:
-  - curl -f "https://raw.githubusercontent.com/lehmannro/assert.sh/v1.1/assert.sh" -o assert.sh
-script:
-  - sudo -E bash postinstall.sh -t travis
-  - bash tests.sh

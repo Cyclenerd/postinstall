@@ -109,7 +109,7 @@ else
 	
 	# Change password
 	if id -u "$MY_USERNAME" >> "$INSTALL_LOG" 2>&1; then
-		if [ -z "$TRAVIS" ]; then
+		if [ -z "$CI" ]; then
 			echo_step "  Change password"
 			echo
 			echo
@@ -117,7 +117,7 @@ else
 			passwd "$MY_USERNAME"
 			echo
 		else
-			echo "!!! Travis CI detected. No password change !!!" >>"$INSTALL_LOG"
+			echo "!!! CI detected. No password change !!!" >>"$INSTALL_LOG"
 		fi
 	fi
 fi

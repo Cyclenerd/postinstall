@@ -220,17 +220,6 @@ function check_if_root_or_die() {
 	echo_success
 }
 
-# check_travis() check travis (https://travis-ci.org/Cyclenerd/postinstall) environment
-function check_travis() {
-	if [ -n "$TRAVIS" ]; then
-		MY_HOMEBREW_USER="travis"
-		export MY_HOMEBREW_USER
-		echo "!!! Travis CI detected. Behavior is somewhat different !!!" >>"$INSTALL_LOG"
-		echo_step "Travis CI detected. Behavior is somewhat different!"
-		echo_success
-	fi
-}
-
 # check_bash() check if current shell is bash
 function check_bash() {
 	echo_step "Checking if current shell is bash"
@@ -578,14 +567,6 @@ function resync_installer() {
 			if [ "$?" -ne 0 ]; then
 				exit_with_failure "Failed to do $MY_INSTALLER update"
 			fi
-			if [ -z "$TRAVIS" ]; then
-				$MY_INSTALLER -qq upgrade >>"$INSTALL_LOG" 2>&1
-				if [ "$?" -ne 0 ]; then
-					exit_with_failure "Failed to do $MY_INSTALLER upgrade"
-				fi
-			else
-				echo "!!! Travis CI detected. No long upgrade is performed !!!" >>"$INSTALL_LOG"
-			fi
 			;;
 		dnf|yum)
 			$MY_INSTALLER -y update >>"$INSTALL_LOG" 2>&1
@@ -838,7 +819,6 @@ detect_hostname_fqdn
 detect_operating_system
 detect_architecture
 check_if_root_or_die
-check_travis
 
 echo_step "Preparing to Install"; echo
 
