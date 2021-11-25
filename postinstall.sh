@@ -1,4 +1,5 @@
 #!/bin/bash
+#shellcheck disable=SC2181
 
 # postinstall.sh
 # Author: Nils Knieling - https://github.com/Cyclenerd/postinstall
@@ -907,12 +908,12 @@ if [ -f "$PACKAGES_LIST" ]; then
 			echo_step "  $PACKAGE"
 			echo -e "\n$MY_INSTALLER $INSTALL $PACKAGE" >>"$INSTALL_LOG"
 			if [[ $MY_INSTALLER == "brew" ]]; then
-				$MY_INSTALLER $MY_INSTALL "$PACKAGE" | sudo tee -a "$INSTALL_LOG" 2>&1
+				$MY_INSTALLER "$MY_INSTALL" "$PACKAGE" | sudo tee -a "$INSTALL_LOG" 2>&1
 			elif [[ $MY_INSTALLER == "slackpkg" ]]; then
 				# not silent
-				$MY_INSTALLER $MY_INSTALL "$PACKAGE"
+				$MY_INSTALLER "$MY_INSTALL" "$PACKAGE"
 			else
-				$MY_INSTALLER $MY_INSTALL "$PACKAGE" >>"$INSTALL_LOG" 2>&1
+				$MY_INSTALLER "$MY_INSTALL" "$PACKAGE" >>"$INSTALL_LOG" 2>&1
 			fi
 			if [ "$?" -ne 0 ]; then
 				echo_warning "Failed to install, will attempt to continue"
