@@ -6,8 +6,6 @@
 Bash Script to automate post-installation steps.
 Helps to install packages on different operating systems.
 
-<div style="background-color: white">
-
 ![Apple macOS](img/apple-osx.png)
 ![Arch Linux](img/arch.png)
 ![CentOS](img/centos.png)
@@ -23,8 +21,6 @@ Helps to install packages on different operating systems.
 ![Android](img/android.png)
 ![Termux](img/termux.png)
 ![Alpine Linux](img/alpine.png)
-
-</div>
 
 Puppy, Cygwin and Haiku are also supported.
 
