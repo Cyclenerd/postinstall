@@ -4,25 +4,28 @@
 [![Ubuntu 20.04 LTS](https://github.com/Cyclenerd/postinstall/actions/workflows/ubuntu_2004.yml/badge.svg?branch=master)](https://github.com/Cyclenerd/postinstall/actions/workflows/ubuntu_2004.yml)
 
 Bash Script to automate post-installation steps.
-Helps to install packages on different operating systems.
+Helps to install packages on different operating systems:
 
-![Apple macOS](img/apple-osx.png)
-![Arch Linux](img/arch.png)
-![CentOS](img/centos.png)
-![Debian](img/debian.png)
-![Fedora](img/fedora.png)
-![FreeBSD](img/freebsd.png)
-![Mageia](img/mageia.png)
-![OpenBSD](img/openbsd.png)
-![Red Hat](img/redhat.png)
-![SUSE](img/opensuse.png)
-![Slackware](img/slackware.png)
-![Ubuntu](img/ubuntu.png)
-![Android](img/android.png)
-![Termux](img/termux.png)
-![Alpine Linux](img/alpine.png)
-
-Puppy, Cygwin and Haiku are also supported.
+* [x] Alpine Linux
+* [x] Android (Termux)
+* [x] Apple macOS
+* [x] Arch Linux
+* [x] CentOS
+* [x] Debian
+* [x] Fedora
+* [x] FreeBSD
+* [x] Haiku
+* [x] Mageia
+* [x] NetBSD
+* [x] OpenBSD
+* [x] OpenWRT
+* [x] Puppy
+* [x] RedHat
+* [x] RockyLinux
+* [x] Slackware
+* [x] SUSE
+* [x] Ubuntu
+* [x] Windows (Cygwin)
 
 ## Overview
 
