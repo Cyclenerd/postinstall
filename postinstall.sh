@@ -239,7 +239,7 @@ function check_fetcher() {
 	else
 		echo_step_info "Try to install curl"
 		echo -e "\n$MY_INSTALLER $INSTALL curl" >>"$INSTALL_LOG"
-		if $MY_INSTALLER $MY_INSTALL "curl" >>"$INSTALL_LOG" 2>&1; then
+		if $MY_INSTALLER "$MY_INSTALL" "curl" >>"$INSTALL_LOG" 2>&1; then
 			export FETCHER="curl -fs"
 		else
 			exit_with_failure "'curl' is needed. Please install 'curl'. More details can be found at https://curl.haxx.se/"
