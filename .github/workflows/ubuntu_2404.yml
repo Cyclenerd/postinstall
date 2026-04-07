@@ -1,12 +1,17 @@
-name: "Ubuntu 20.04 LTS"
+name: "Ubuntu 24.04 LTS"
 
 on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
   workflow_dispatch:
 
 jobs:
   ubuntu-2004:
-    name: Test Ubuntu 20.04 LTS
-    runs-on: ubuntu-20.04
+    name: Test Ubuntu 24.04 LTS
+    runs-on: ubuntu-24.04
     steps:
 
       # git clone
